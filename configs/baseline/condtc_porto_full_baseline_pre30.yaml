@@ -1,0 +1,43 @@
+# 两组共用时空编码器，只改变 speed_pattern.enabled。
+schema_version: 3
+group: baseline
+dataset: portoLocalTempo4Full_v1
+data_root: data
+seed: 42
+model:
+  d_model: 256
+  num_heads: 2
+  num_layers: 2
+  dim_feedforward: 1024
+  dropout: 0.1
+pretrain:
+  epochs: 30
+  batch_size: 32
+  learning_rate: 0.00015
+cluster:
+  epochs: 6
+  batch_size: 32
+  initialization_batch_size: 256
+  num_clusters: 36
+  representation_learning_rate: 5.0e-05
+  clustering_learning_rate: 0.00015
+  loss_weight: 0.5
+time_loss_weight: 0.1
+weight_decay: 0.01
+speed_pattern:
+  enabled: false
+  warp_axis: sample_index
+  weight: 1.0
+  margin: 0.2
+  positive_dropout: 0.1
+  amplitude:
+  - 0.7
+  - 1.3
+  width:
+  - 0.12
+  - 0.28
+  center:
+  - 0.2
+  - 0.8
+  minimum_rms_fraction: 0.035
+  attempts: 16

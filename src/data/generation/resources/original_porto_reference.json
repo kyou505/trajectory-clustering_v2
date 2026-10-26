@@ -1,0 +1,9 @@
+{
+  "samples": 27305,
+  "classes": 27,
+  "base_routes": 9,
+  "cluster_size_range": {
+    "min": 900,
+    "max": 1100
+  }
+}

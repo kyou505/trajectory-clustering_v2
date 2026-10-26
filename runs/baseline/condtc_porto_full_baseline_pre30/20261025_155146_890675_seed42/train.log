@@ -1,0 +1,985 @@
+group: baseline config: {"schema_version": 1, "group": "baseline", "dataset": "portoLocalTempo4Full_v1", "seed": 42, "motion_features": false, "pretrain": {"epochs": 30, "batch_size": 32, "learning_rate": 0.00015}, "cluster": {"epochs": 6, "batch_size": 32, "initialization_batch_size": 256, "num_clusters": 36, "representation_learning_rate": 5e-05, "clustering_learning_rate": 0.00015, "loss_weight": 0.5}, "time_loss_weight": 0.1, "weight_decay": 0.01, "tempo": {"enabled": false, "weight": 1.0, "margin": 0.2, "positive_dropout": 0.1, "amplitude": [0.7, 1.3], "width": [0.12, 0.28], "center": [0.2, 0.8], "minimum_rms_fraction": 0.035, "attempts": 16}}
+Epoch 1 of 30
+ batch=0050 loss=4.5887
+ batch=0100 loss=4.0748
+ batch=0150 loss=3.6521
+ batch=0200 loss=3.2558
+ batch=0250 loss=3.3334
+ batch=0300 loss=3.2030
+ batch=0350 loss=2.9469
+ batch=0400 loss=2.8521
+ batch=0450 loss=2.7472
+ batch=0500 loss=2.4641
+ batch=0550 loss=2.3623
+ batch=0600 loss=2.1824
+ batch=0650 loss=2.0654
+ batch=0700 loss=2.0210
+ batch=0750 loss=1.9162
+ batch=0800 loss=1.8308
+ batch=0850 loss=1.8160
+ batch=0900 loss=1.7953
+Train: loss=2.8684 loc_loss=2.5523 time_loss=3.1611 loc_acc=0.2575 time_acc=0.0963
+Valid: loss=1.6268 loc_loss=1.3585 time_loss=2.6839 loc_acc=0.4850 time_acc=0.1071
+saved best checkpoint: /root/tempo_fullscale/con-dtc-tempo-fullscale-v1/runs/tempo_fullscale/20261025_155146_890675_full_pre30_seed42/baseline/pretrain_best.pt
+Epoch 2 of 30
+ batch=0050 loss=1.6978
+ batch=0100 loss=1.6668
+ batch=0150 loss=1.6976
+ batch=0200 loss=1.6122
+ batch=0250 loss=1.5963
+ batch=0300 loss=1.5585
+ batch=0350 loss=1.5568
+ batch=0400 loss=1.4883
+ batch=0450 loss=1.5470
+ batch=0500 loss=1.4345
+ batch=0550 loss=1.4797
+ batch=0600 loss=1.5604
+ batch=0650 loss=1.3021
+ batch=0700 loss=1.5282
+ batch=0750 loss=1.4109
+ batch=0800 loss=1.4899
+ batch=0850 loss=1.3064
+ batch=0900 loss=1.3089
+Train: loss=1.5411 loc_loss=1.2764 time_loss=2.6469 loc_acc=0.4976 time_acc=0.1115
+Valid: loss=1.2240 loc_loss=0.9677 time_loss=2.5633 loc_acc=0.6035 time_acc=0.1279
+saved best checkpoint: /root/tempo_fullscale/con-dtc-tempo-fullscale-v1/runs/tempo_fullscale/20261025_155146_890675_full_pre30_seed42/baseline/pretrain_best.pt
+Epoch 3 of 30
+ batch=0050 loss=1.3611
+ batch=0100 loss=1.3997
+ batch=0150 loss=1.4050
+ batch=0200 loss=1.2103
+ batch=0250 loss=1.3046
+ batch=0300 loss=1.3867
+ batch=0350 loss=1.3446
+ batch=0400 loss=1.3490
+ batch=0450 loss=1.3439
+ batch=0500 loss=1.2854
+ batch=0550 loss=1.1384
+ batch=0600 loss=1.2854
+ batch=0650 loss=1.2602
+ batch=0700 loss=1.1929
+ batch=0750 loss=1.2304
+ batch=0800 loss=1.2105
+ batch=0850 loss=1.1781
+ batch=0900 loss=1.1849
+Train: loss=1.2780 loc_loss=1.0274 time_loss=2.5068 loc_acc=0.5797 time_acc=0.1367
+Valid: loss=1.0481 loc_loss=0.8131 time_loss=2.3502 loc_acc=0.6621 time_acc=0.1811
+saved best checkpoint: /root/tempo_fullscale/con-dtc-tempo-fullscale-v1/runs/tempo_fullscale/20261025_155146_890675_full_pre30_seed42/baseline/pretrain_best.pt
+Epoch 4 of 30
+ batch=0050 loss=1.2081
+ batch=0100 loss=1.3139
+ batch=0150 loss=1.1246
+ batch=0200 loss=1.3279
+ batch=0250 loss=1.2122
+ batch=0300 loss=1.1143
+ batch=0350 loss=1.1135
+ batch=0400 loss=1.2955
+ batch=0450 loss=1.1434
+ batch=0500 loss=1.1966
+ batch=0550 loss=1.0293
+ batch=0600 loss=1.1673
+ batch=0650 loss=1.0770
+ batch=0700 loss=1.0632
+ batch=0750 loss=1.2985
+ batch=0800 loss=1.0812
+ batch=0850 loss=1.2924
+ batch=0900 loss=1.0767
+Train: loss=1.1246 loc_loss=0.8985 time_loss=2.2611 loc_acc=0.6317 time_acc=0.1862
+Valid: loss=0.9376 loc_loss=0.7281 time_loss=2.0947 loc_acc=0.7031 time_acc=0.2392
+saved best checkpoint: /root/tempo_fullscale/con-dtc-tempo-fullscale-v1/runs/tempo_fullscale/20261025_155146_890675_full_pre30_seed42/baseline/pretrain_best.pt
+Epoch 5 of 30
+ batch=0050 loss=1.0545
+ batch=0100 loss=1.1228
+ batch=0150 loss=1.0895
+ batch=0200 loss=0.9080
+ batch=0250 loss=1.0283
+ batch=0300 loss=1.0364
+ batch=0350 loss=0.9959
+ batch=0400 loss=1.1002
+ batch=0450 loss=1.0168
+ batch=0500 loss=1.0449
+ batch=0550 loss=1.0395
+ batch=0600 loss=0.9495
+ batch=0650 loss=0.9680
+ batch=0700 loss=1.1380
+ batch=0750 loss=0.9003
+ batch=0800 loss=0.9426
+ batch=0850 loss=0.9665
+ batch=0900 loss=0.8564
+Train: loss=1.0115 loc_loss=0.8053 time_loss=2.0622 loc_acc=0.6720 time_acc=0.2257
+Valid: loss=0.8278 loc_loss=0.6373 time_loss=1.9050 loc_acc=0.7462 time_acc=0.2815
+saved best checkpoint: /root/tempo_fullscale/con-dtc-tempo-fullscale-v1/runs/tempo_fullscale/20261025_155146_890675_full_pre30_seed42/baseline/pretrain_best.pt
+Epoch 6 of 30
+ batch=0050 loss=0.8488
+ batch=0100 loss=0.9313
+ batch=0150 loss=1.0410
+ batch=0200 loss=0.8752
+ batch=0250 loss=1.0245
+ batch=0300 loss=0.9238
+ batch=0350 loss=0.9603
+ batch=0400 loss=0.9076
+ batch=0450 loss=0.8513
+ batch=0500 loss=0.8916
+ batch=0550 loss=1.0253
+ batch=0600 loss=0.8563
+ batch=0650 loss=0.8620
+ batch=0700 loss=0.8111
+ batch=0750 loss=0.9712
+ batch=0800 loss=0.9380
+ batch=0850 loss=0.7452
+ batch=0900 loss=0.7836
+Train: loss=0.9137 loc_loss=0.7223 time_loss=1.9140 loc_acc=0.7097 time_acc=0.2626
+Valid: loss=0.7175 loc_loss=0.5407 time_loss=1.7674 loc_acc=0.7834 time_acc=0.3248
+saved best checkpoint: /root/tempo_fullscale/con-dtc-tempo-fullscale-v1/runs/tempo_fullscale/20261025_155146_890675_full_pre30_seed42/baseline/pretrain_best.pt
+Epoch 7 of 30
+ batch=0050 loss=0.9284
+ batch=0100 loss=0.8141
+ batch=0150 loss=0.7389
+ batch=0200 loss=0.9010
+ batch=0250 loss=0.9609
+ batch=0300 loss=0.7832
+ batch=0350 loss=0.8995
+ batch=0400 loss=0.9511
+ batch=0450 loss=0.8264
+ batch=0500 loss=0.9258
+ batch=0550 loss=0.8238
+ batch=0600 loss=0.8455
+ batch=0650 loss=0.7893
+ batch=0700 loss=0.8071
+ batch=0750 loss=0.8540
+ batch=0800 loss=0.8311
+ batch=0850 loss=0.8900
+ batch=0900 loss=0.8022
+Train: loss=0.8307 loc_loss=0.6515 time_loss=1.7922 loc_acc=0.7418 time_acc=0.2934
+Valid: loss=0.6452 loc_loss=0.4792 time_loss=1.6596 loc_acc=0.8156 time_acc=0.3537
+saved best checkpoint: /root/tempo_fullscale/con-dtc-tempo-fullscale-v1/runs/tempo_fullscale/20261025_155146_890675_full_pre30_seed42/baseline/pretrain_best.pt
+Epoch 8 of 30
+ batch=0050 loss=0.8131
+ batch=0100 loss=0.7145
+ batch=0150 loss=0.7008
+ batch=0200 loss=0.7144
+ batch=0250 loss=0.7195
+ batch=0300 loss=0.7289
+ batch=0350 loss=0.7907
+ batch=0400 loss=0.7600
+ batch=0450 loss=0.8186
+ batch=0500 loss=0.7806
+ batch=0550 loss=0.8451
+ batch=0600 loss=0.6569
+ batch=0650 loss=0.7209
+ batch=0700 loss=0.6327
+ batch=0750 loss=0.6940
+ batch=0800 loss=0.6602
+ batch=0850 loss=0.7386
+ batch=0900 loss=0.7547
+Train: loss=0.7617 loc_loss=0.5926 time_loss=1.6914 loc_acc=0.7676 time_acc=0.3213
+Valid: loss=0.6005 loc_loss=0.4460 time_loss=1.5454 loc_acc=0.8258 time_acc=0.3982
+saved best checkpoint: /root/tempo_fullscale/con-dtc-tempo-fullscale-v1/runs/tempo_fullscale/20261025_155146_890675_full_pre30_seed42/baseline/pretrain_best.pt
+Epoch 9 of 30
+ batch=0050 loss=0.7613
+ batch=0100 loss=0.7625
+ batch=0150 loss=0.8070
+ batch=0200 loss=0.8033
+ batch=0250 loss=0.7025
+ batch=0300 loss=0.7160
+ batch=0350 loss=0.7738
+ batch=0400 loss=0.6607
+ batch=0450 loss=0.6949
+ batch=0500 loss=0.7802
+ batch=0550 loss=0.5954
+ batch=0600 loss=0.7058
+ batch=0650 loss=0.6726
+ batch=0700 loss=0.6742
+ batch=0750 loss=0.6502
+ batch=0800 loss=0.6681
+ batch=0850 loss=0.7017
+ batch=0900 loss=0.7195
+Train: loss=0.7120 loc_loss=0.5518 time_loss=1.6017 loc_acc=0.7845 time_acc=0.3488
+Valid: loss=0.5527 loc_loss=0.4060 time_loss=1.4672 loc_acc=0.8400 time_acc=0.4234
+saved best checkpoint: /root/tempo_fullscale/con-dtc-tempo-fullscale-v1/runs/tempo_fullscale/20261025_155146_890675_full_pre30_seed42/baseline/pretrain_best.pt
+Epoch 10 of 30
+ batch=0050 loss=0.6601
+ batch=0100 loss=0.6805
+ batch=0150 loss=0.6692
+ batch=0200 loss=0.8877
+ batch=0250 loss=0.6810
+ batch=0300 loss=0.6916
+ batch=0350 loss=0.6806
+ batch=0400 loss=0.5833
+ batch=0450 loss=0.7438
+ batch=0500 loss=0.6522
+ batch=0550 loss=0.6282
+ batch=0600 loss=0.6865
+ batch=0650 loss=0.6507
+ batch=0700 loss=0.5797
+ batch=0750 loss=0.6343
+ batch=0800 loss=0.6606
+ batch=0850 loss=0.5868
+ batch=0900 loss=0.7477
+Train: loss=0.6666 loc_loss=0.5146 time_loss=1.5199 loc_acc=0.8004 time_acc=0.3785
+Valid: loss=0.5183 loc_loss=0.3803 time_loss=1.3797 loc_acc=0.8503 time_acc=0.4613
+saved best checkpoint: /root/tempo_fullscale/con-dtc-tempo-fullscale-v1/runs/tempo_fullscale/20261025_155146_890675_full_pre30_seed42/baseline/pretrain_best.pt
+Epoch 11 of 30
+ batch=0050 loss=0.6919
+ batch=0100 loss=0.6400
+ batch=0150 loss=0.5756
+ batch=0200 loss=0.7418
+ batch=0250 loss=0.6750
+ batch=0300 loss=0.5856
+ batch=0350 loss=0.7001
+ batch=0400 loss=0.6235
+ batch=0450 loss=0.6734
+ batch=0500 loss=0.4943
+ batch=0550 loss=0.6565
+ batch=0600 loss=0.6107
+ batch=0650 loss=0.6227
+ batch=0700 loss=0.6141
+ batch=0750 loss=0.5877
+ batch=0800 loss=0.4733
+ batch=0850 loss=0.5660
+ batch=0900 loss=0.7333
+Train: loss=0.6281 loc_loss=0.4833 time_loss=1.4478 loc_acc=0.8137 time_acc=0.3987
+Valid: loss=0.4767 loc_loss=0.3466 time_loss=1.3006 loc_acc=0.8645 time_acc=0.4878
+saved best checkpoint: /root/tempo_fullscale/con-dtc-tempo-fullscale-v1/runs/tempo_fullscale/20261025_155146_890675_full_pre30_seed42/baseline/pretrain_best.pt
+Epoch 12 of 30
+ batch=0050 loss=0.6595
+ batch=0100 loss=0.5616
+ batch=0150 loss=0.6180
+ batch=0200 loss=0.6344
+ batch=0250 loss=0.5229
+ batch=0300 loss=0.5820
+ batch=0350 loss=0.5275
+ batch=0400 loss=0.6091
+ batch=0450 loss=0.5994
+ batch=0500 loss=0.6761
+ batch=0550 loss=0.5553
+ batch=0600 loss=0.5950
+ batch=0650 loss=0.5969
+ batch=0700 loss=0.5641
+ batch=0750 loss=0.6777
+ batch=0800 loss=0.4737
+ batch=0850 loss=0.5593
+ batch=0900 loss=0.5541
+Train: loss=0.5958 loc_loss=0.4575 time_loss=1.3829 loc_acc=0.8225 time_acc=0.4218
+Valid: loss=0.4471 loc_loss=0.3252 time_loss=1.2189 loc_acc=0.8712 time_acc=0.5333
+saved best checkpoint: /root/tempo_fullscale/con-dtc-tempo-fullscale-v1/runs/tempo_fullscale/20261025_155146_890675_full_pre30_seed42/baseline/pretrain_best.pt
+Epoch 13 of 30
+ batch=0050 loss=0.4541
+ batch=0100 loss=0.6342
+ batch=0150 loss=0.5779
+ batch=0200 loss=0.5490
+ batch=0250 loss=0.5695
+ batch=0300 loss=0.5718
+ batch=0350 loss=0.4965
+ batch=0400 loss=0.5329
+ batch=0450 loss=0.6140
+ batch=0500 loss=0.5770
+ batch=0550 loss=0.5505
+ batch=0600 loss=0.4885
+ batch=0650 loss=0.5886
+ batch=0700 loss=0.5523
+ batch=0750 loss=0.5333
+ batch=0800 loss=0.4919
+ batch=0850 loss=0.5642
+ batch=0900 loss=0.4934
+Train: loss=0.5685 loc_loss=0.4368 time_loss=1.3168 loc_acc=0.8315 time_acc=0.4466
+Valid: loss=0.4230 loc_loss=0.3072 time_loss=1.1578 loc_acc=0.8765 time_acc=0.5582
+saved best checkpoint: /root/tempo_fullscale/con-dtc-tempo-fullscale-v1/runs/tempo_fullscale/20261025_155146_890675_full_pre30_seed42/baseline/pretrain_best.pt
+Epoch 14 of 30
+ batch=0050 loss=0.4894
+ batch=0100 loss=0.5802
+ batch=0150 loss=0.4894
+ batch=0200 loss=0.4588
+ batch=0250 loss=0.5417
+ batch=0300 loss=0.6390
+ batch=0350 loss=0.6094
+ batch=0400 loss=0.5667
+ batch=0450 loss=0.6154
+ batch=0500 loss=0.5189
+ batch=0550 loss=0.5072
+ batch=0600 loss=0.5786
+ batch=0650 loss=0.5811
+ batch=0700 loss=0.6210
+ batch=0750 loss=0.5194
+ batch=0800 loss=0.4998
+ batch=0850 loss=0.5936
+ batch=0900 loss=0.4651
+Train: loss=0.5425 loc_loss=0.4169 time_loss=1.2564 loc_acc=0.8395 time_acc=0.4707
+Valid: loss=0.4112 loc_loss=0.3010 time_loss=1.1014 loc_acc=0.8776 time_acc=0.5625
+saved best checkpoint: /root/tempo_fullscale/con-dtc-tempo-fullscale-v1/runs/tempo_fullscale/20261025_155146_890675_full_pre30_seed42/baseline/pretrain_best.pt
+Epoch 15 of 30
+ batch=0050 loss=0.4792
+ batch=0100 loss=0.5391
+ batch=0150 loss=0.4883
+ batch=0200 loss=0.5893
+ batch=0250 loss=0.5882
+ batch=0300 loss=0.4501
+ batch=0350 loss=0.5398
+ batch=0400 loss=0.5512
+ batch=0450 loss=0.4467
+ batch=0500 loss=0.4637
+ batch=0550 loss=0.5268
+ batch=0600 loss=0.5342
+ batch=0650 loss=0.4509
+ batch=0700 loss=0.4623
+ batch=0750 loss=0.4634
+ batch=0800 loss=0.4619
+ batch=0850 loss=0.5136
+ batch=0900 loss=0.6044
+Train: loss=0.5184 loc_loss=0.3985 time_loss=1.1992 loc_acc=0.8467 time_acc=0.4913
+Valid: loss=0.3837 loc_loss=0.2798 time_loss=1.0393 loc_acc=0.8847 time_acc=0.6046
+saved best checkpoint: /root/tempo_fullscale/con-dtc-tempo-fullscale-v1/runs/tempo_fullscale/20261025_155146_890675_full_pre30_seed42/baseline/pretrain_best.pt
+Epoch 16 of 30
+ batch=0050 loss=0.5324
+ batch=0100 loss=0.5387
+ batch=0150 loss=0.4848
+ batch=0200 loss=0.4759
+ batch=0250 loss=0.4684
+ batch=0300 loss=0.4967
+ batch=0350 loss=0.4712
+ batch=0400 loss=0.5926
+ batch=0450 loss=0.4782
+ batch=0500 loss=0.4993
+ batch=0550 loss=0.5087
+ batch=0600 loss=0.5310
+ batch=0650 loss=0.4731
+ batch=0700 loss=0.5725
+ batch=0750 loss=0.4552
+ batch=0800 loss=0.4214
+ batch=0850 loss=0.4699
+ batch=0900 loss=0.4629
+Train: loss=0.4979 loc_loss=0.3829 time_loss=1.1501 loc_acc=0.8522 time_acc=0.5105
+Valid: loss=0.3726 loc_loss=0.2756 time_loss=0.9698 loc_acc=0.8884 time_acc=0.6345
+saved best checkpoint: /root/tempo_fullscale/con-dtc-tempo-fullscale-v1/runs/tempo_fullscale/20261025_155146_890675_full_pre30_seed42/baseline/pretrain_best.pt
+Epoch 17 of 30
+ batch=0050 loss=0.5224
+ batch=0100 loss=0.4134
+ batch=0150 loss=0.4960
+ batch=0200 loss=0.5048
+ batch=0250 loss=0.4923
+ batch=0300 loss=0.4727
+ batch=0350 loss=0.3939
+ batch=0400 loss=0.5025
+ batch=0450 loss=0.3687
+ batch=0500 loss=0.3797
+ batch=0550 loss=0.4180
+ batch=0600 loss=0.4180
+ batch=0650 loss=0.5138
+ batch=0700 loss=0.4168
+ batch=0750 loss=0.5002
+ batch=0800 loss=0.4483
+ batch=0850 loss=0.4486
+ batch=0900 loss=0.3740
+Train: loss=0.4752 loc_loss=0.3655 time_loss=1.0962 loc_acc=0.8591 time_acc=0.5325
+Valid: loss=0.3523 loc_loss=0.2600 time_loss=0.9233 loc_acc=0.8914 time_acc=0.6515
+saved best checkpoint: /root/tempo_fullscale/con-dtc-tempo-fullscale-v1/runs/tempo_fullscale/20261025_155146_890675_full_pre30_seed42/baseline/pretrain_best.pt
+Epoch 18 of 30
+ batch=0050 loss=0.4039
+ batch=0100 loss=0.4217
+ batch=0150 loss=0.4636
+ batch=0200 loss=0.4135
+ batch=0250 loss=0.4817
+ batch=0300 loss=0.4083
+ batch=0350 loss=0.5812
+ batch=0400 loss=0.4588
+ batch=0450 loss=0.5025
+ batch=0500 loss=0.5549
+ batch=0550 loss=0.4793
+ batch=0600 loss=0.4750
+ batch=0650 loss=0.4126
+ batch=0700 loss=0.6290
+ batch=0750 loss=0.4702
+ batch=0800 loss=0.4579
+ batch=0850 loss=0.4902
+ batch=0900 loss=0.4484
+Train: loss=0.4572 loc_loss=0.3524 time_loss=1.0482 loc_acc=0.8641 time_acc=0.5522
+Valid: loss=0.3404 loc_loss=0.2517 time_loss=0.8872 loc_acc=0.8929 time_acc=0.6586
+saved best checkpoint: /root/tempo_fullscale/con-dtc-tempo-fullscale-v1/runs/tempo_fullscale/20261025_155146_890675_full_pre30_seed42/baseline/pretrain_best.pt
+Epoch 19 of 30
+ batch=0050 loss=0.4838
+ batch=0100 loss=0.5609
+ batch=0150 loss=0.4491
+ batch=0200 loss=0.4655
+ batch=0250 loss=0.4581
+ batch=0300 loss=0.4541
+ batch=0350 loss=0.4470
+ batch=0400 loss=0.4470
+ batch=0450 loss=0.3929
+ batch=0500 loss=0.4445
+ batch=0550 loss=0.5290
+ batch=0600 loss=0.4459
+ batch=0650 loss=0.4023
+ batch=0700 loss=0.4241
+ batch=0750 loss=0.4143
+ batch=0800 loss=0.5311
+ batch=0850 loss=0.4982
+ batch=0900 loss=0.4561
+Train: loss=0.4404 loc_loss=0.3395 time_loss=1.0095 loc_acc=0.8684 time_acc=0.5682
+Valid: loss=0.3264 loc_loss=0.2429 time_loss=0.8342 loc_acc=0.8959 time_acc=0.6856
+saved best checkpoint: /root/tempo_fullscale/con-dtc-tempo-fullscale-v1/runs/tempo_fullscale/20261025_155146_890675_full_pre30_seed42/baseline/pretrain_best.pt
+Epoch 20 of 30
+ batch=0050 loss=0.4335
+ batch=0100 loss=0.4250
+ batch=0150 loss=0.3568
+ batch=0200 loss=0.4578
+ batch=0250 loss=0.3721
+ batch=0300 loss=0.4957
+ batch=0350 loss=0.3309
+ batch=0400 loss=0.4245
+ batch=0450 loss=0.4323
+ batch=0500 loss=0.4202
+ batch=0550 loss=0.3417
+ batch=0600 loss=0.4116
+ batch=0650 loss=0.3813
+ batch=0700 loss=0.4516
+ batch=0750 loss=0.4083
+ batch=0800 loss=0.3943
+ batch=0850 loss=0.4595
+ batch=0900 loss=0.4300
+Train: loss=0.4263 loc_loss=0.3294 time_loss=0.9696 loc_acc=0.8711 time_acc=0.5838
+Valid: loss=0.3246 loc_loss=0.2440 time_loss=0.8056 loc_acc=0.8946 time_acc=0.6908
+saved best checkpoint: /root/tempo_fullscale/con-dtc-tempo-fullscale-v1/runs/tempo_fullscale/20261025_155146_890675_full_pre30_seed42/baseline/pretrain_best.pt
+Epoch 21 of 30
+ batch=0050 loss=0.3907
+ batch=0100 loss=0.4963
+ batch=0150 loss=0.4631
+ batch=0200 loss=0.4087
+ batch=0250 loss=0.4145
+ batch=0300 loss=0.4458
+ batch=0350 loss=0.3847
+ batch=0400 loss=0.4084
+ batch=0450 loss=0.4033
+ batch=0500 loss=0.3881
+ batch=0550 loss=0.4265
+ batch=0600 loss=0.5215
+ batch=0650 loss=0.4982
+ batch=0700 loss=0.3667
+ batch=0750 loss=0.3980
+ batch=0800 loss=0.3220
+ batch=0850 loss=0.4537
+ batch=0900 loss=0.3773
+Train: loss=0.4120 loc_loss=0.3185 time_loss=0.9352 loc_acc=0.8754 time_acc=0.5977
+Valid: loss=0.3138 loc_loss=0.2367 time_loss=0.7710 loc_acc=0.8994 time_acc=0.7033
+saved best checkpoint: /root/tempo_fullscale/con-dtc-tempo-fullscale-v1/runs/tempo_fullscale/20261025_155146_890675_full_pre30_seed42/baseline/pretrain_best.pt
+Epoch 22 of 30
+ batch=0050 loss=0.3746
+ batch=0100 loss=0.4114
+ batch=0150 loss=0.3509
+ batch=0200 loss=0.3355
+ batch=0250 loss=0.3690
+ batch=0300 loss=0.4588
+ batch=0350 loss=0.4677
+ batch=0400 loss=0.4895
+ batch=0450 loss=0.3983
+ batch=0500 loss=0.3333
+ batch=0550 loss=0.3918
+ batch=0600 loss=0.6045
+ batch=0650 loss=0.3904
+ batch=0700 loss=0.4207
+ batch=0750 loss=0.5176
+ batch=0800 loss=0.3742
+ batch=0850 loss=0.4872
+ batch=0900 loss=0.3612
+Train: loss=0.4008 loc_loss=0.3108 time_loss=0.8998 loc_acc=0.8787 time_acc=0.6125
+Valid: loss=0.2914 loc_loss=0.2181 time_loss=0.7324 loc_acc=0.9019 time_acc=0.7179
+saved best checkpoint: /root/tempo_fullscale/con-dtc-tempo-fullscale-v1/runs/tempo_fullscale/20261025_155146_890675_full_pre30_seed42/baseline/pretrain_best.pt
+Epoch 23 of 30
+ batch=0050 loss=0.3649
+ batch=0100 loss=0.3735
+ batch=0150 loss=0.3851
+ batch=0200 loss=0.3650
+ batch=0250 loss=0.3728
+ batch=0300 loss=0.3850
+ batch=0350 loss=0.4498
+ batch=0400 loss=0.3325
+ batch=0450 loss=0.3748
+ batch=0500 loss=0.4640
+ batch=0550 loss=0.3031
+ batch=0600 loss=0.3732
+ batch=0650 loss=0.3861
+ batch=0700 loss=0.4412
+ batch=0750 loss=0.3752
+ batch=0800 loss=0.4113
+ batch=0850 loss=0.3765
+ batch=0900 loss=0.3708
+Train: loss=0.3869 loc_loss=0.2997 time_loss=0.8718 loc_acc=0.8816 time_acc=0.6228
+Valid: loss=0.2978 loc_loss=0.2262 time_loss=0.7157 loc_acc=0.8997 time_acc=0.7189
+Epoch 24 of 30
+ batch=0050 loss=0.3966
+ batch=0100 loss=0.3873
+ batch=0150 loss=0.4396
+ batch=0200 loss=0.4319
+ batch=0250 loss=0.2944
+ batch=0300 loss=0.3829
+ batch=0350 loss=0.3018
+ batch=0400 loss=0.3606
+ batch=0450 loss=0.3731
+ batch=0500 loss=0.3310
+ batch=0550 loss=0.4278
+ batch=0600 loss=0.4562
+ batch=0650 loss=0.3702
+ batch=0700 loss=0.3678
+ batch=0750 loss=0.3072
+ batch=0800 loss=0.4418
+ batch=0850 loss=0.3422
+ batch=0900 loss=0.4120
+Train: loss=0.3802 loc_loss=0.2952 time_loss=0.8494 loc_acc=0.8834 time_acc=0.6286
+Valid: loss=0.2869 loc_loss=0.2170 time_loss=0.6988 loc_acc=0.9035 time_acc=0.7185
+saved best checkpoint: /root/tempo_fullscale/con-dtc-tempo-fullscale-v1/runs/tempo_fullscale/20261025_155146_890675_full_pre30_seed42/baseline/pretrain_best.pt
+Epoch 25 of 30
+ batch=0050 loss=0.4458
+ batch=0100 loss=0.3634
+ batch=0150 loss=0.3839
+ batch=0200 loss=0.3460
+ batch=0250 loss=0.3945
+ batch=0300 loss=0.3586
+ batch=0350 loss=0.3155
+ batch=0400 loss=0.3525
+ batch=0450 loss=0.4956
+ batch=0500 loss=0.3843
+ batch=0550 loss=0.4169
+ batch=0600 loss=0.3422
+ batch=0650 loss=0.4064
+ batch=0700 loss=0.4208
+ batch=0750 loss=0.3565
+ batch=0800 loss=0.3576
+ batch=0850 loss=0.3871
+ batch=0900 loss=0.3249
+Train: loss=0.3695 loc_loss=0.2872 time_loss=0.8225 loc_acc=0.8858 time_acc=0.6413
+Valid: loss=0.2922 loc_loss=0.2249 time_loss=0.6726 loc_acc=0.8994 time_acc=0.7305
+Epoch 26 of 30
+ batch=0050 loss=0.3303
+ batch=0100 loss=0.4423
+ batch=0150 loss=0.3965
+ batch=0200 loss=0.2990
+ batch=0250 loss=0.2797
+ batch=0300 loss=0.4805
+ batch=0350 loss=0.3592
+ batch=0400 loss=0.3670
+ batch=0450 loss=0.3904
+ batch=0500 loss=0.3271
+ batch=0550 loss=0.3145
+ batch=0600 loss=0.3101
+ batch=0650 loss=0.3010
+ batch=0700 loss=0.3907
+ batch=0750 loss=0.3652
+ batch=0800 loss=0.2921
+ batch=0850 loss=0.4908
+ batch=0900 loss=0.4533
+Train: loss=0.3602 loc_loss=0.2805 time_loss=0.7979 loc_acc=0.8879 time_acc=0.6522
+Valid: loss=0.2781 loc_loss=0.2131 time_loss=0.6508 loc_acc=0.9043 time_acc=0.7352
+saved best checkpoint: /root/tempo_fullscale/con-dtc-tempo-fullscale-v1/runs/tempo_fullscale/20261025_155146_890675_full_pre30_seed42/baseline/pretrain_best.pt
+Epoch 27 of 30
+ batch=0050 loss=0.3436
+ batch=0100 loss=0.3172
+ batch=0150 loss=0.2838
+ batch=0200 loss=0.4116
+ batch=0250 loss=0.4099
+ batch=0300 loss=0.3656
+ batch=0350 loss=0.3501
+ batch=0400 loss=0.3329
+ batch=0450 loss=0.3089
+ batch=0500 loss=0.3135
+ batch=0550 loss=0.3294
+ batch=0600 loss=0.3010
+ batch=0650 loss=0.3355
+ batch=0700 loss=0.3681
+ batch=0750 loss=0.2463
+ batch=0800 loss=0.3421
+ batch=0850 loss=0.3561
+ batch=0900 loss=0.3302
+Train: loss=0.3518 loc_loss=0.2737 time_loss=0.7806 loc_acc=0.8895 time_acc=0.6570
+Valid: loss=0.2822 loc_loss=0.2187 time_loss=0.6345 loc_acc=0.9026 time_acc=0.7413
+Epoch 28 of 30
+ batch=0050 loss=0.3652
+ batch=0100 loss=0.3017
+ batch=0150 loss=0.3143
+ batch=0200 loss=0.3314
+ batch=0250 loss=0.4212
+ batch=0300 loss=0.2353
+ batch=0350 loss=0.2941
+ batch=0400 loss=0.2961
+ batch=0450 loss=0.3458
+ batch=0500 loss=0.3473
+ batch=0550 loss=0.3970
+ batch=0600 loss=0.4074
+ batch=0650 loss=0.4126
+ batch=0700 loss=0.3481
+ batch=0750 loss=0.3993
+ batch=0800 loss=0.3687
+ batch=0850 loss=0.3311
+ batch=0900 loss=0.3859
+Train: loss=0.3443 loc_loss=0.2685 time_loss=0.7580 loc_acc=0.8922 time_acc=0.6664
+Valid: loss=0.2669 loc_loss=0.2051 time_loss=0.6182 loc_acc=0.9049 time_acc=0.7437
+saved best checkpoint: /root/tempo_fullscale/con-dtc-tempo-fullscale-v1/runs/tempo_fullscale/20261025_155146_890675_full_pre30_seed42/baseline/pretrain_best.pt
+Epoch 29 of 30
+ batch=0050 loss=0.2940
+ batch=0100 loss=0.2605
+ batch=0150 loss=0.3024
+ batch=0200 loss=0.3272
+ batch=0250 loss=0.3425
+ batch=0300 loss=0.3028
+ batch=0350 loss=0.4065
+ batch=0400 loss=0.3184
+ batch=0450 loss=0.3419
+ batch=0500 loss=0.3984
+ batch=0550 loss=0.3752
+ batch=0600 loss=0.3018
+ batch=0650 loss=0.3158
+ batch=0700 loss=0.2771
+ batch=0750 loss=0.2976
+ batch=0800 loss=0.3645
+ batch=0850 loss=0.2656
+ batch=0900 loss=0.3004
+Train: loss=0.3406 loc_loss=0.2662 time_loss=0.7438 loc_acc=0.8917 time_acc=0.6722
+Valid: loss=0.2617 loc_loss=0.2020 time_loss=0.5965 loc_acc=0.9056 time_acc=0.7566
+saved best checkpoint: /root/tempo_fullscale/con-dtc-tempo-fullscale-v1/runs/tempo_fullscale/20261025_155146_890675_full_pre30_seed42/baseline/pretrain_best.pt
+Epoch 30 of 30
+ batch=0050 loss=0.2436
+ batch=0100 loss=0.3155
+ batch=0150 loss=0.2953
+ batch=0200 loss=0.3249
+ batch=0250 loss=0.3469
+ batch=0300 loss=0.3529
+ batch=0350 loss=0.3517
+ batch=0400 loss=0.3076
+ batch=0450 loss=0.3972
+ batch=0500 loss=0.2745
+ batch=0550 loss=0.4037
+ batch=0600 loss=0.2780
+ batch=0650 loss=0.3507
+ batch=0700 loss=0.3442
+ batch=0750 loss=0.3277
+ batch=0800 loss=0.3344
+ batch=0850 loss=0.3563
+ batch=0900 loss=0.3830
+Train: loss=0.3349 loc_loss=0.2623 time_loss=0.7257 loc_acc=0.8926 time_acc=0.6787
+Valid: loss=0.2663 loc_loss=0.2085 time_loss=0.5777 loc_acc=0.9054 time_acc=0.7655
+Best valid loss: 0.26169706156518724
+device: cuda
+dataset: portoLocalTempo4Full_v1
+historical instance contrast: weight=0.0 temperature=0.5 start_epoch=3 anchor_weighting=uniform checkpoint_selection=last best_metric=base_loss
+history_encoder_ema_momentum=None ema_update_timing=after_optimizer_step_including_warmup
+pretrain checkpoint: /root/tempo_fullscale/con-dtc-tempo-fullscale-v1/runs/tempo_fullscale/20261025_155146_890675_full_pre30_seed42/baseline/pretrain_best.pt
+representation diagnostic saved: /root/tempo_fullscale/con-dtc-tempo-fullscale-v1/runs/tempo_fullscale/20261025_155146_890675_full_pre30_seed42/baseline/cluster/representation_history/epoch_000.pt samples=36000 cosine_previous=n/a
+epoch=1 / num_epochs=6
+history_contrast_enabled=False history_source_epoch=None
+history_encoder_source=None encoder_ema_updates_start=0
+batch=0025 loss=0.5795 representation_loss=0.3476 clustering_loss=0.4639 instance_nce=0.0000 cluster_nce=0.0000 history_nce=0.0000 history_nce_weighted=0.0000 lfss_ls=0.0000 lfss_li=0.0000 
+batch=0050 loss=0.5121 representation_loss=0.2944 clustering_loss=0.4354 instance_nce=0.0000 cluster_nce=0.0000 history_nce=0.0000 history_nce_weighted=0.0000 lfss_ls=0.0000 lfss_li=0.0000 
+batch=0075 loss=0.5023 representation_loss=0.3128 clustering_loss=0.3789 instance_nce=0.0000 cluster_nce=0.0000 history_nce=0.0000 history_nce_weighted=0.0000 lfss_ls=0.0000 lfss_li=0.0000 
+batch=0100 loss=0.5322 representation_loss=0.3180 clustering_loss=0.4284 instance_nce=0.0000 cluster_nce=0.0000 history_nce=0.0000 history_nce_weighted=0.0000 lfss_ls=0.0000 lfss_li=0.0000 
+batch=0125 loss=0.4910 representation_loss=0.2943 clustering_loss=0.3934 instance_nce=0.0000 cluster_nce=0.0000 history_nce=0.0000 history_nce_weighted=0.0000 lfss_ls=0.0000 lfss_li=0.0000 
+batch=0150 loss=0.4773 representation_loss=0.3007 clustering_loss=0.3533 instance_nce=0.0000 cluster_nce=0.0000 history_nce=0.0000 history_nce_weighted=0.0000 lfss_ls=0.0000 lfss_li=0.0000 
+batch=0175 loss=0.5515 representation_loss=0.3671 clustering_loss=0.3689 instance_nce=0.0000 cluster_nce=0.0000 history_nce=0.0000 history_nce_weighted=0.0000 lfss_ls=0.0000 lfss_li=0.0000 
+batch=0200 loss=0.4131 representation_loss=0.2292 clustering_loss=0.3678 instance_nce=0.0000 cluster_nce=0.0000 history_nce=0.0000 history_nce_weighted=0.0000 lfss_ls=0.0000 lfss_li=0.0000 
+batch=0225 loss=0.5589 representation_loss=0.3774 clustering_loss=0.3629 instance_nce=0.0000 cluster_nce=0.0000 history_nce=0.0000 history_nce_weighted=0.0000 lfss_ls=0.0000 lfss_li=0.0000 
+batch=0250 loss=0.4848 representation_loss=0.3159 clustering_loss=0.3376 instance_nce=0.0000 cluster_nce=0.0000 history_nce=0.0000 history_nce_weighted=0.0000 lfss_ls=0.0000 lfss_li=0.0000 
+batch=0275 loss=0.4115 representation_loss=0.2453 clustering_loss=0.3324 instance_nce=0.0000 cluster_nce=0.0000 history_nce=0.0000 history_nce_weighted=0.0000 lfss_ls=0.0000 lfss_li=0.0000 
+batch=0300 loss=0.5217 representation_loss=0.3658 clustering_loss=0.3117 instance_nce=0.0000 cluster_nce=0.0000 history_nce=0.0000 history_nce_weighted=0.0000 lfss_ls=0.0000 lfss_li=0.0000 
+batch=0325 loss=0.4214 representation_loss=0.2577 clustering_loss=0.3274 instance_nce=0.0000 cluster_nce=0.0000 history_nce=0.0000 history_nce_weighted=0.0000 lfss_ls=0.0000 lfss_li=0.0000 
+batch=0350 loss=0.4635 representation_loss=0.3138 clustering_loss=0.2994 instance_nce=0.0000 cluster_nce=0.0000 history_nce=0.0000 history_nce_weighted=0.0000 lfss_ls=0.0000 lfss_li=0.0000 
+batch=0375 loss=0.4387 representation_loss=0.2857 clustering_loss=0.3059 instance_nce=0.0000 cluster_nce=0.0000 history_nce=0.0000 history_nce_weighted=0.0000 lfss_ls=0.0000 lfss_li=0.0000 
+batch=0400 loss=0.4435 representation_loss=0.2726 clustering_loss=0.3417 instance_nce=0.0000 cluster_nce=0.0000 history_nce=0.0000 history_nce_weighted=0.0000 lfss_ls=0.0000 lfss_li=0.0000 
+batch=0425 loss=0.4742 representation_loss=0.3235 clustering_loss=0.3014 instance_nce=0.0000 cluster_nce=0.0000 history_nce=0.0000 history_nce_weighted=0.0000 lfss_ls=0.0000 lfss_li=0.0000 
+batch=0450 loss=0.4533 representation_loss=0.3057 clustering_loss=0.2951 instance_nce=0.0000 cluster_nce=0.0000 history_nce=0.0000 history_nce_weighted=0.0000 lfss_ls=0.0000 lfss_li=0.0000 
+batch=0475 loss=0.4861 representation_loss=0.3215 clustering_loss=0.3292 instance_nce=0.0000 cluster_nce=0.0000 history_nce=0.0000 history_nce_weighted=0.0000 lfss_ls=0.0000 lfss_li=0.0000 
+batch=0500 loss=0.4347 representation_loss=0.2998 clustering_loss=0.2696 instance_nce=0.0000 cluster_nce=0.0000 history_nce=0.0000 history_nce_weighted=0.0000 lfss_ls=0.0000 lfss_li=0.0000 
+batch=0525 loss=0.4861 representation_loss=0.3430 clustering_loss=0.2862 instance_nce=0.0000 cluster_nce=0.0000 history_nce=0.0000 history_nce_weighted=0.0000 lfss_ls=0.0000 lfss_li=0.0000 
+batch=0550 loss=0.4002 representation_loss=0.2635 clustering_loss=0.2733 instance_nce=0.0000 cluster_nce=0.0000 history_nce=0.0000 history_nce_weighted=0.0000 lfss_ls=0.0000 lfss_li=0.0000 
+batch=0575 loss=0.4495 representation_loss=0.3109 clustering_loss=0.2773 instance_nce=0.0000 cluster_nce=0.0000 history_nce=0.0000 history_nce_weighted=0.0000 lfss_ls=0.0000 lfss_li=0.0000 
+batch=0600 loss=0.4237 representation_loss=0.2795 clustering_loss=0.2884 instance_nce=0.0000 cluster_nce=0.0000 history_nce=0.0000 history_nce_weighted=0.0000 lfss_ls=0.0000 lfss_li=0.0000 
+batch=0625 loss=0.4383 representation_loss=0.2984 clustering_loss=0.2799 instance_nce=0.0000 cluster_nce=0.0000 history_nce=0.0000 history_nce_weighted=0.0000 lfss_ls=0.0000 lfss_li=0.0000 
+batch=0650 loss=0.4275 representation_loss=0.3134 clustering_loss=0.2282 instance_nce=0.0000 cluster_nce=0.0000 history_nce=0.0000 history_nce_weighted=0.0000 lfss_ls=0.0000 lfss_li=0.0000 
+batch=0675 loss=0.4416 representation_loss=0.3056 clustering_loss=0.2721 instance_nce=0.0000 cluster_nce=0.0000 history_nce=0.0000 history_nce_weighted=0.0000 lfss_ls=0.0000 lfss_li=0.0000 
+batch=0700 loss=0.4665 representation_loss=0.3319 clustering_loss=0.2692 instance_nce=0.0000 cluster_nce=0.0000 history_nce=0.0000 history_nce_weighted=0.0000 lfss_ls=0.0000 lfss_li=0.0000 
+batch=0725 loss=0.4357 representation_loss=0.2975 clustering_loss=0.2763 instance_nce=0.0000 cluster_nce=0.0000 history_nce=0.0000 history_nce_weighted=0.0000 lfss_ls=0.0000 lfss_li=0.0000 
+batch=0750 loss=0.4824 representation_loss=0.3515 clustering_loss=0.2618 instance_nce=0.0000 cluster_nce=0.0000 history_nce=0.0000 history_nce_weighted=0.0000 lfss_ls=0.0000 lfss_li=0.0000 
+batch=0775 loss=0.4127 representation_loss=0.2965 clustering_loss=0.2323 instance_nce=0.0000 cluster_nce=0.0000 history_nce=0.0000 history_nce_weighted=0.0000 lfss_ls=0.0000 lfss_li=0.0000 
+batch=0800 loss=0.4813 representation_loss=0.3544 clustering_loss=0.2539 instance_nce=0.0000 cluster_nce=0.0000 history_nce=0.0000 history_nce_weighted=0.0000 lfss_ls=0.0000 lfss_li=0.0000 
+batch=0825 loss=0.4076 representation_loss=0.2799 clustering_loss=0.2555 instance_nce=0.0000 cluster_nce=0.0000 history_nce=0.0000 history_nce_weighted=0.0000 lfss_ls=0.0000 lfss_li=0.0000 
+batch=0850 loss=0.5363 representation_loss=0.4097 clustering_loss=0.2533 instance_nce=0.0000 cluster_nce=0.0000 history_nce=0.0000 history_nce_weighted=0.0000 lfss_ls=0.0000 lfss_li=0.0000 
+batch=0875 loss=0.5343 representation_loss=0.4102 clustering_loss=0.2483 instance_nce=0.0000 cluster_nce=0.0000 history_nce=0.0000 history_nce_weighted=0.0000 lfss_ls=0.0000 lfss_li=0.0000 
+batch=0900 loss=0.3955 representation_loss=0.2701 clustering_loss=0.2507 instance_nce=0.0000 cluster_nce=0.0000 history_nce=0.0000 history_nce_weighted=0.0000 lfss_ls=0.0000 lfss_li=0.0000 
+batch=0925 loss=0.4059 representation_loss=0.2928 clustering_loss=0.2261 instance_nce=0.0000 cluster_nce=0.0000 history_nce=0.0000 history_nce_weighted=0.0000 lfss_ls=0.0000 lfss_li=0.0000 
+batch=0950 loss=0.4165 representation_loss=0.2846 clustering_loss=0.2639 instance_nce=0.0000 cluster_nce=0.0000 history_nce=0.0000 history_nce_weighted=0.0000 lfss_ls=0.0000 lfss_li=0.0000 
+batch=0975 loss=0.4171 representation_loss=0.2979 clustering_loss=0.2384 instance_nce=0.0000 cluster_nce=0.0000 history_nce=0.0000 history_nce_weighted=0.0000 lfss_ls=0.0000 lfss_li=0.0000 
+batch=1000 loss=0.4400 representation_loss=0.3321 clustering_loss=0.2158 instance_nce=0.0000 cluster_nce=0.0000 history_nce=0.0000 history_nce_weighted=0.0000 lfss_ls=0.0000 lfss_li=0.0000 
+batch=1025 loss=0.3611 representation_loss=0.2527 clustering_loss=0.2168 instance_nce=0.0000 cluster_nce=0.0000 history_nce=0.0000 history_nce_weighted=0.0000 lfss_ls=0.0000 lfss_li=0.0000 
+batch=1050 loss=0.4340 representation_loss=0.3267 clustering_loss=0.2146 instance_nce=0.0000 cluster_nce=0.0000 history_nce=0.0000 history_nce_weighted=0.0000 lfss_ls=0.0000 lfss_li=0.0000 
+batch=1075 loss=0.3857 representation_loss=0.2600 clustering_loss=0.2514 instance_nce=0.0000 cluster_nce=0.0000 history_nce=0.0000 history_nce_weighted=0.0000 lfss_ls=0.0000 lfss_li=0.0000 
+batch=1100 loss=0.3842 representation_loss=0.2612 clustering_loss=0.2460 instance_nce=0.0000 cluster_nce=0.0000 history_nce=0.0000 history_nce_weighted=0.0000 lfss_ls=0.0000 lfss_li=0.0000 
+batch=1125 loss=0.3476 representation_loss=0.2289 clustering_loss=0.2375 instance_nce=0.0000 cluster_nce=0.0000 history_nce=0.0000 history_nce_weighted=0.0000 lfss_ls=0.0000 lfss_li=0.0000 
+encoder_ema_updates_end=0
+representation diagnostic saved: /root/tempo_fullscale/con-dtc-tempo-fullscale-v1/runs/tempo_fullscale/20261025_155146_890675_full_pre30_seed42/baseline/cluster/representation_history/epoch_001.pt samples=36000 cosine_previous=0.9841192364692688
+Train: loss=0.4630 mstm=0.3129 instance_nce=0.0000 cluster_nce=0.0000 history_nce=0.0000 history_nce_1to2=0.0000 history_nce_2to1=0.0000 history_nce_weighted=0.0000 history_applied_fraction=0.0000 base_loss=0.4630 lfss_ls=0.0000 lfss_li=0.0000 dec=0.3002
+save checkpoint:  /root/tempo_fullscale/con-dtc-tempo-fullscale-v1/runs/tempo_fullscale/20261025_155146_890675_full_pre30_seed42/baseline/cluster/checkpoints/condtc_best.pt
+epoch=2 / num_epochs=6
+history_contrast_enabled=False history_source_epoch=None
+history_encoder_source=None encoder_ema_updates_start=0
+batch=0025 loss=0.5582 representation_loss=0.3094 clustering_loss=0.4976 instance_nce=0.0000 cluster_nce=0.0000 history_nce=0.0000 history_nce_weighted=0.0000 lfss_ls=0.0000 lfss_li=0.0000 
+batch=0050 loss=0.5228 representation_loss=0.2902 clustering_loss=0.4651 instance_nce=0.0000 cluster_nce=0.0000 history_nce=0.0000 history_nce_weighted=0.0000 lfss_ls=0.0000 lfss_li=0.0000 
+batch=0075 loss=0.5065 representation_loss=0.2826 clustering_loss=0.4476 instance_nce=0.0000 cluster_nce=0.0000 history_nce=0.0000 history_nce_weighted=0.0000 lfss_ls=0.0000 lfss_li=0.0000 
+batch=0100 loss=0.5739 representation_loss=0.3424 clustering_loss=0.4630 instance_nce=0.0000 cluster_nce=0.0000 history_nce=0.0000 history_nce_weighted=0.0000 lfss_ls=0.0000 lfss_li=0.0000 
+batch=0125 loss=0.5191 representation_loss=0.2993 clustering_loss=0.4395 instance_nce=0.0000 cluster_nce=0.0000 history_nce=0.0000 history_nce_weighted=0.0000 lfss_ls=0.0000 lfss_li=0.0000 
+batch=0150 loss=0.4983 representation_loss=0.2809 clustering_loss=0.4348 instance_nce=0.0000 cluster_nce=0.0000 history_nce=0.0000 history_nce_weighted=0.0000 lfss_ls=0.0000 lfss_li=0.0000 
+batch=0175 loss=0.6079 representation_loss=0.3794 clustering_loss=0.4571 instance_nce=0.0000 cluster_nce=0.0000 history_nce=0.0000 history_nce_weighted=0.0000 lfss_ls=0.0000 lfss_li=0.0000 
+batch=0200 loss=0.4839 representation_loss=0.2688 clustering_loss=0.4302 instance_nce=0.0000 cluster_nce=0.0000 history_nce=0.0000 history_nce_weighted=0.0000 lfss_ls=0.0000 lfss_li=0.0000 
+batch=0225 loss=0.5495 representation_loss=0.3407 clustering_loss=0.4176 instance_nce=0.0000 cluster_nce=0.0000 history_nce=0.0000 history_nce_weighted=0.0000 lfss_ls=0.0000 lfss_li=0.0000 
+batch=0250 loss=0.5278 representation_loss=0.3222 clustering_loss=0.4113 instance_nce=0.0000 cluster_nce=0.0000 history_nce=0.0000 history_nce_weighted=0.0000 lfss_ls=0.0000 lfss_li=0.0000 
+batch=0275 loss=0.5751 representation_loss=0.3722 clustering_loss=0.4058 instance_nce=0.0000 cluster_nce=0.0000 history_nce=0.0000 history_nce_weighted=0.0000 lfss_ls=0.0000 lfss_li=0.0000 
+batch=0300 loss=0.4930 representation_loss=0.2786 clustering_loss=0.4288 instance_nce=0.0000 cluster_nce=0.0000 history_nce=0.0000 history_nce_weighted=0.0000 lfss_ls=0.0000 lfss_li=0.0000 
+batch=0325 loss=0.5849 representation_loss=0.3812 clustering_loss=0.4074 instance_nce=0.0000 cluster_nce=0.0000 history_nce=0.0000 history_nce_weighted=0.0000 lfss_ls=0.0000 lfss_li=0.0000 
+batch=0350 loss=0.5300 representation_loss=0.3400 clustering_loss=0.3801 instance_nce=0.0000 cluster_nce=0.0000 history_nce=0.0000 history_nce_weighted=0.0000 lfss_ls=0.0000 lfss_li=0.0000 
+batch=0375 loss=0.5617 representation_loss=0.3520 clustering_loss=0.4194 instance_nce=0.0000 cluster_nce=0.0000 history_nce=0.0000 history_nce_weighted=0.0000 lfss_ls=0.0000 lfss_li=0.0000 
+batch=0400 loss=0.5179 representation_loss=0.3255 clustering_loss=0.3847 instance_nce=0.0000 cluster_nce=0.0000 history_nce=0.0000 history_nce_weighted=0.0000 lfss_ls=0.0000 lfss_li=0.0000 
+batch=0425 loss=0.5359 representation_loss=0.3380 clustering_loss=0.3959 instance_nce=0.0000 cluster_nce=0.0000 history_nce=0.0000 history_nce_weighted=0.0000 lfss_ls=0.0000 lfss_li=0.0000 
+batch=0450 loss=0.4523 representation_loss=0.2522 clustering_loss=0.4002 instance_nce=0.0000 cluster_nce=0.0000 history_nce=0.0000 history_nce_weighted=0.0000 lfss_ls=0.0000 lfss_li=0.0000 
+batch=0475 loss=0.4915 representation_loss=0.2922 clustering_loss=0.3987 instance_nce=0.0000 cluster_nce=0.0000 history_nce=0.0000 history_nce_weighted=0.0000 lfss_ls=0.0000 lfss_li=0.0000 
+batch=0500 loss=0.5449 representation_loss=0.3290 clustering_loss=0.4319 instance_nce=0.0000 cluster_nce=0.0000 history_nce=0.0000 history_nce_weighted=0.0000 lfss_ls=0.0000 lfss_li=0.0000 
+batch=0525 loss=0.4325 representation_loss=0.2466 clustering_loss=0.3719 instance_nce=0.0000 cluster_nce=0.0000 history_nce=0.0000 history_nce_weighted=0.0000 lfss_ls=0.0000 lfss_li=0.0000 
+batch=0550 loss=0.5111 representation_loss=0.3084 clustering_loss=0.4053 instance_nce=0.0000 cluster_nce=0.0000 history_nce=0.0000 history_nce_weighted=0.0000 lfss_ls=0.0000 lfss_li=0.0000 
+batch=0575 loss=0.4708 representation_loss=0.2788 clustering_loss=0.3841 instance_nce=0.0000 cluster_nce=0.0000 history_nce=0.0000 history_nce_weighted=0.0000 lfss_ls=0.0000 lfss_li=0.0000 
+batch=0600 loss=0.5216 representation_loss=0.3346 clustering_loss=0.3740 instance_nce=0.0000 cluster_nce=0.0000 history_nce=0.0000 history_nce_weighted=0.0000 lfss_ls=0.0000 lfss_li=0.0000 
+batch=0625 loss=0.5039 representation_loss=0.3078 clustering_loss=0.3922 instance_nce=0.0000 cluster_nce=0.0000 history_nce=0.0000 history_nce_weighted=0.0000 lfss_ls=0.0000 lfss_li=0.0000 
+batch=0650 loss=0.5358 representation_loss=0.3493 clustering_loss=0.3729 instance_nce=0.0000 cluster_nce=0.0000 history_nce=0.0000 history_nce_weighted=0.0000 lfss_ls=0.0000 lfss_li=0.0000 
+batch=0675 loss=0.5094 representation_loss=0.3261 clustering_loss=0.3666 instance_nce=0.0000 cluster_nce=0.0000 history_nce=0.0000 history_nce_weighted=0.0000 lfss_ls=0.0000 lfss_li=0.0000 
+batch=0700 loss=0.4830 representation_loss=0.2882 clustering_loss=0.3896 instance_nce=0.0000 cluster_nce=0.0000 history_nce=0.0000 history_nce_weighted=0.0000 lfss_ls=0.0000 lfss_li=0.0000 
+batch=0725 loss=0.5389 representation_loss=0.3494 clustering_loss=0.3791 instance_nce=0.0000 cluster_nce=0.0000 history_nce=0.0000 history_nce_weighted=0.0000 lfss_ls=0.0000 lfss_li=0.0000 
+batch=0750 loss=0.5478 representation_loss=0.3640 clustering_loss=0.3676 instance_nce=0.0000 cluster_nce=0.0000 history_nce=0.0000 history_nce_weighted=0.0000 lfss_ls=0.0000 lfss_li=0.0000 
+batch=0775 loss=0.4037 representation_loss=0.2192 clustering_loss=0.3690 instance_nce=0.0000 cluster_nce=0.0000 history_nce=0.0000 history_nce_weighted=0.0000 lfss_ls=0.0000 lfss_li=0.0000 
+batch=0800 loss=0.5266 representation_loss=0.3388 clustering_loss=0.3755 instance_nce=0.0000 cluster_nce=0.0000 history_nce=0.0000 history_nce_weighted=0.0000 lfss_ls=0.0000 lfss_li=0.0000 
+batch=0825 loss=0.4312 representation_loss=0.2589 clustering_loss=0.3446 instance_nce=0.0000 cluster_nce=0.0000 history_nce=0.0000 history_nce_weighted=0.0000 lfss_ls=0.0000 lfss_li=0.0000 
+batch=0850 loss=0.4958 representation_loss=0.3202 clustering_loss=0.3511 instance_nce=0.0000 cluster_nce=0.0000 history_nce=0.0000 history_nce_weighted=0.0000 lfss_ls=0.0000 lfss_li=0.0000 
+batch=0875 loss=0.4740 representation_loss=0.2943 clustering_loss=0.3593 instance_nce=0.0000 cluster_nce=0.0000 history_nce=0.0000 history_nce_weighted=0.0000 lfss_ls=0.0000 lfss_li=0.0000 
+batch=0900 loss=0.4744 representation_loss=0.2952 clustering_loss=0.3582 instance_nce=0.0000 cluster_nce=0.0000 history_nce=0.0000 history_nce_weighted=0.0000 lfss_ls=0.0000 lfss_li=0.0000 
+batch=0925 loss=0.4575 representation_loss=0.2768 clustering_loss=0.3615 instance_nce=0.0000 cluster_nce=0.0000 history_nce=0.0000 history_nce_weighted=0.0000 lfss_ls=0.0000 lfss_li=0.0000 
+batch=0950 loss=0.5497 representation_loss=0.3640 clustering_loss=0.3715 instance_nce=0.0000 cluster_nce=0.0000 history_nce=0.0000 history_nce_weighted=0.0000 lfss_ls=0.0000 lfss_li=0.0000 
+batch=0975 loss=0.5624 representation_loss=0.3895 clustering_loss=0.3458 instance_nce=0.0000 cluster_nce=0.0000 history_nce=0.0000 history_nce_weighted=0.0000 lfss_ls=0.0000 lfss_li=0.0000 
+batch=1000 loss=0.4962 representation_loss=0.3236 clustering_loss=0.3453 instance_nce=0.0000 cluster_nce=0.0000 history_nce=0.0000 history_nce_weighted=0.0000 lfss_ls=0.0000 lfss_li=0.0000 
+batch=1025 loss=0.4685 representation_loss=0.2831 clustering_loss=0.3707 instance_nce=0.0000 cluster_nce=0.0000 history_nce=0.0000 history_nce_weighted=0.0000 lfss_ls=0.0000 lfss_li=0.0000 
+batch=1050 loss=0.4265 representation_loss=0.2560 clustering_loss=0.3412 instance_nce=0.0000 cluster_nce=0.0000 history_nce=0.0000 history_nce_weighted=0.0000 lfss_ls=0.0000 lfss_li=0.0000 
+batch=1075 loss=0.4511 representation_loss=0.2846 clustering_loss=0.3329 instance_nce=0.0000 cluster_nce=0.0000 history_nce=0.0000 history_nce_weighted=0.0000 lfss_ls=0.0000 lfss_li=0.0000 
+batch=1100 loss=0.4346 representation_loss=0.2704 clustering_loss=0.3285 instance_nce=0.0000 cluster_nce=0.0000 history_nce=0.0000 history_nce_weighted=0.0000 lfss_ls=0.0000 lfss_li=0.0000 
+batch=1125 loss=0.4876 representation_loss=0.3094 clustering_loss=0.3563 instance_nce=0.0000 cluster_nce=0.0000 history_nce=0.0000 history_nce_weighted=0.0000 lfss_ls=0.0000 lfss_li=0.0000 
+encoder_ema_updates_end=0
+representation diagnostic saved: /root/tempo_fullscale/con-dtc-tempo-fullscale-v1/runs/tempo_fullscale/20261025_155146_890675_full_pre30_seed42/baseline/cluster/representation_history/epoch_002.pt samples=36000 cosine_previous=0.9955722689628601
+Train: loss=0.5119 mstm=0.3139 instance_nce=0.0000 cluster_nce=0.0000 history_nce=0.0000 history_nce_1to2=0.0000 history_nce_2to1=0.0000 history_nce_weighted=0.0000 history_applied_fraction=0.0000 base_loss=0.5119 lfss_ls=0.0000 lfss_li=0.0000 dec=0.3960
+epoch=3 / num_epochs=6
+history_contrast_enabled=False history_source_epoch=None
+history_encoder_source=None encoder_ema_updates_start=0
+batch=0025 loss=0.5090 representation_loss=0.2648 clustering_loss=0.4883 instance_nce=0.0000 cluster_nce=0.0000 history_nce=0.0000 history_nce_weighted=0.0000 lfss_ls=0.0000 lfss_li=0.0000 
+batch=0050 loss=0.5115 representation_loss=0.2790 clustering_loss=0.4650 instance_nce=0.0000 cluster_nce=0.0000 history_nce=0.0000 history_nce_weighted=0.0000 lfss_ls=0.0000 lfss_li=0.0000 
+batch=0075 loss=0.4866 representation_loss=0.2567 clustering_loss=0.4599 instance_nce=0.0000 cluster_nce=0.0000 history_nce=0.0000 history_nce_weighted=0.0000 lfss_ls=0.0000 lfss_li=0.0000 
+batch=0100 loss=0.5225 representation_loss=0.2798 clustering_loss=0.4855 instance_nce=0.0000 cluster_nce=0.0000 history_nce=0.0000 history_nce_weighted=0.0000 lfss_ls=0.0000 lfss_li=0.0000 
+batch=0125 loss=0.4654 representation_loss=0.2355 clustering_loss=0.4598 instance_nce=0.0000 cluster_nce=0.0000 history_nce=0.0000 history_nce_weighted=0.0000 lfss_ls=0.0000 lfss_li=0.0000 
+batch=0150 loss=0.5860 representation_loss=0.3582 clustering_loss=0.4556 instance_nce=0.0000 cluster_nce=0.0000 history_nce=0.0000 history_nce_weighted=0.0000 lfss_ls=0.0000 lfss_li=0.0000 
+batch=0175 loss=0.5430 representation_loss=0.2971 clustering_loss=0.4917 instance_nce=0.0000 cluster_nce=0.0000 history_nce=0.0000 history_nce_weighted=0.0000 lfss_ls=0.0000 lfss_li=0.0000 
+batch=0200 loss=0.5390 representation_loss=0.3041 clustering_loss=0.4697 instance_nce=0.0000 cluster_nce=0.0000 history_nce=0.0000 history_nce_weighted=0.0000 lfss_ls=0.0000 lfss_li=0.0000 
+batch=0225 loss=0.5268 representation_loss=0.3083 clustering_loss=0.4370 instance_nce=0.0000 cluster_nce=0.0000 history_nce=0.0000 history_nce_weighted=0.0000 lfss_ls=0.0000 lfss_li=0.0000 
+batch=0250 loss=0.4996 representation_loss=0.2855 clustering_loss=0.4281 instance_nce=0.0000 cluster_nce=0.0000 history_nce=0.0000 history_nce_weighted=0.0000 lfss_ls=0.0000 lfss_li=0.0000 
+batch=0275 loss=0.5552 representation_loss=0.3194 clustering_loss=0.4716 instance_nce=0.0000 cluster_nce=0.0000 history_nce=0.0000 history_nce_weighted=0.0000 lfss_ls=0.0000 lfss_li=0.0000 
+batch=0300 loss=0.4922 representation_loss=0.2763 clustering_loss=0.4318 instance_nce=0.0000 cluster_nce=0.0000 history_nce=0.0000 history_nce_weighted=0.0000 lfss_ls=0.0000 lfss_li=0.0000 
+batch=0325 loss=0.5261 representation_loss=0.3094 clustering_loss=0.4335 instance_nce=0.0000 cluster_nce=0.0000 history_nce=0.0000 history_nce_weighted=0.0000 lfss_ls=0.0000 lfss_li=0.0000 
+batch=0350 loss=0.4647 representation_loss=0.2544 clustering_loss=0.4207 instance_nce=0.0000 cluster_nce=0.0000 history_nce=0.0000 history_nce_weighted=0.0000 lfss_ls=0.0000 lfss_li=0.0000 
+batch=0375 loss=0.5755 representation_loss=0.3467 clustering_loss=0.4576 instance_nce=0.0000 cluster_nce=0.0000 history_nce=0.0000 history_nce_weighted=0.0000 lfss_ls=0.0000 lfss_li=0.0000 
+batch=0400 loss=0.5765 representation_loss=0.3597 clustering_loss=0.4335 instance_nce=0.0000 cluster_nce=0.0000 history_nce=0.0000 history_nce_weighted=0.0000 lfss_ls=0.0000 lfss_li=0.0000 
+batch=0425 loss=0.5075 representation_loss=0.2933 clustering_loss=0.4283 instance_nce=0.0000 cluster_nce=0.0000 history_nce=0.0000 history_nce_weighted=0.0000 lfss_ls=0.0000 lfss_li=0.0000 
+batch=0450 loss=0.5222 representation_loss=0.3206 clustering_loss=0.4033 instance_nce=0.0000 cluster_nce=0.0000 history_nce=0.0000 history_nce_weighted=0.0000 lfss_ls=0.0000 lfss_li=0.0000 
+batch=0475 loss=0.5705 representation_loss=0.3643 clustering_loss=0.4123 instance_nce=0.0000 cluster_nce=0.0000 history_nce=0.0000 history_nce_weighted=0.0000 lfss_ls=0.0000 lfss_li=0.0000 
+batch=0500 loss=0.5609 representation_loss=0.3391 clustering_loss=0.4436 instance_nce=0.0000 cluster_nce=0.0000 history_nce=0.0000 history_nce_weighted=0.0000 lfss_ls=0.0000 lfss_li=0.0000 
+batch=0525 loss=0.5454 representation_loss=0.3223 clustering_loss=0.4463 instance_nce=0.0000 cluster_nce=0.0000 history_nce=0.0000 history_nce_weighted=0.0000 lfss_ls=0.0000 lfss_li=0.0000 
+batch=0550 loss=0.4857 representation_loss=0.2697 clustering_loss=0.4321 instance_nce=0.0000 cluster_nce=0.0000 history_nce=0.0000 history_nce_weighted=0.0000 lfss_ls=0.0000 lfss_li=0.0000 
+batch=0575 loss=0.4737 representation_loss=0.2642 clustering_loss=0.4190 instance_nce=0.0000 cluster_nce=0.0000 history_nce=0.0000 history_nce_weighted=0.0000 lfss_ls=0.0000 lfss_li=0.0000 
+batch=0600 loss=0.5172 representation_loss=0.3087 clustering_loss=0.4170 instance_nce=0.0000 cluster_nce=0.0000 history_nce=0.0000 history_nce_weighted=0.0000 lfss_ls=0.0000 lfss_li=0.0000 
+batch=0625 loss=0.5246 representation_loss=0.3247 clustering_loss=0.3998 instance_nce=0.0000 cluster_nce=0.0000 history_nce=0.0000 history_nce_weighted=0.0000 lfss_ls=0.0000 lfss_li=0.0000 
+batch=0650 loss=0.6274 representation_loss=0.4045 clustering_loss=0.4457 instance_nce=0.0000 cluster_nce=0.0000 history_nce=0.0000 history_nce_weighted=0.0000 lfss_ls=0.0000 lfss_li=0.0000 
+batch=0675 loss=0.5341 representation_loss=0.3199 clustering_loss=0.4284 instance_nce=0.0000 cluster_nce=0.0000 history_nce=0.0000 history_nce_weighted=0.0000 lfss_ls=0.0000 lfss_li=0.0000 
+batch=0700 loss=0.4680 representation_loss=0.2657 clustering_loss=0.4044 instance_nce=0.0000 cluster_nce=0.0000 history_nce=0.0000 history_nce_weighted=0.0000 lfss_ls=0.0000 lfss_li=0.0000 
+batch=0725 loss=0.4768 representation_loss=0.2707 clustering_loss=0.4122 instance_nce=0.0000 cluster_nce=0.0000 history_nce=0.0000 history_nce_weighted=0.0000 lfss_ls=0.0000 lfss_li=0.0000 
+batch=0750 loss=0.5104 representation_loss=0.3143 clustering_loss=0.3923 instance_nce=0.0000 cluster_nce=0.0000 history_nce=0.0000 history_nce_weighted=0.0000 lfss_ls=0.0000 lfss_li=0.0000 
+batch=0775 loss=0.4680 representation_loss=0.2501 clustering_loss=0.4360 instance_nce=0.0000 cluster_nce=0.0000 history_nce=0.0000 history_nce_weighted=0.0000 lfss_ls=0.0000 lfss_li=0.0000 
+batch=0800 loss=0.5211 representation_loss=0.3348 clustering_loss=0.3725 instance_nce=0.0000 cluster_nce=0.0000 history_nce=0.0000 history_nce_weighted=0.0000 lfss_ls=0.0000 lfss_li=0.0000 
+batch=0825 loss=0.5063 representation_loss=0.3041 clustering_loss=0.4044 instance_nce=0.0000 cluster_nce=0.0000 history_nce=0.0000 history_nce_weighted=0.0000 lfss_ls=0.0000 lfss_li=0.0000 
+batch=0850 loss=0.5325 representation_loss=0.3252 clustering_loss=0.4146 instance_nce=0.0000 cluster_nce=0.0000 history_nce=0.0000 history_nce_weighted=0.0000 lfss_ls=0.0000 lfss_li=0.0000 
+batch=0875 loss=0.4795 representation_loss=0.2782 clustering_loss=0.4026 instance_nce=0.0000 cluster_nce=0.0000 history_nce=0.0000 history_nce_weighted=0.0000 lfss_ls=0.0000 lfss_li=0.0000 
+batch=0900 loss=0.5191 representation_loss=0.2977 clustering_loss=0.4429 instance_nce=0.0000 cluster_nce=0.0000 history_nce=0.0000 history_nce_weighted=0.0000 lfss_ls=0.0000 lfss_li=0.0000 
+batch=0925 loss=0.5231 representation_loss=0.3323 clustering_loss=0.3815 instance_nce=0.0000 cluster_nce=0.0000 history_nce=0.0000 history_nce_weighted=0.0000 lfss_ls=0.0000 lfss_li=0.0000 
+batch=0950 loss=0.4521 representation_loss=0.2683 clustering_loss=0.3674 instance_nce=0.0000 cluster_nce=0.0000 history_nce=0.0000 history_nce_weighted=0.0000 lfss_ls=0.0000 lfss_li=0.0000 
+batch=0975 loss=0.5417 representation_loss=0.3439 clustering_loss=0.3956 instance_nce=0.0000 cluster_nce=0.0000 history_nce=0.0000 history_nce_weighted=0.0000 lfss_ls=0.0000 lfss_li=0.0000 
+batch=1000 loss=0.4772 representation_loss=0.2901 clustering_loss=0.3741 instance_nce=0.0000 cluster_nce=0.0000 history_nce=0.0000 history_nce_weighted=0.0000 lfss_ls=0.0000 lfss_li=0.0000 
+batch=1025 loss=0.4449 representation_loss=0.2577 clustering_loss=0.3745 instance_nce=0.0000 cluster_nce=0.0000 history_nce=0.0000 history_nce_weighted=0.0000 lfss_ls=0.0000 lfss_li=0.0000 
+batch=1050 loss=0.5104 representation_loss=0.3180 clustering_loss=0.3847 instance_nce=0.0000 cluster_nce=0.0000 history_nce=0.0000 history_nce_weighted=0.0000 lfss_ls=0.0000 lfss_li=0.0000 
+batch=1075 loss=0.4815 representation_loss=0.2948 clustering_loss=0.3734 instance_nce=0.0000 cluster_nce=0.0000 history_nce=0.0000 history_nce_weighted=0.0000 lfss_ls=0.0000 lfss_li=0.0000 
+batch=1100 loss=0.4628 representation_loss=0.2607 clustering_loss=0.4043 instance_nce=0.0000 cluster_nce=0.0000 history_nce=0.0000 history_nce_weighted=0.0000 lfss_ls=0.0000 lfss_li=0.0000 
+batch=1125 loss=0.5259 representation_loss=0.3257 clustering_loss=0.4004 instance_nce=0.0000 cluster_nce=0.0000 history_nce=0.0000 history_nce_weighted=0.0000 lfss_ls=0.0000 lfss_li=0.0000 
+encoder_ema_updates_end=0
+representation diagnostic saved: /root/tempo_fullscale/con-dtc-tempo-fullscale-v1/runs/tempo_fullscale/20261025_155146_890675_full_pre30_seed42/baseline/cluster/representation_history/epoch_003.pt samples=36000 cosine_previous=0.9979021549224854
+Train: loss=0.5255 mstm=0.3130 instance_nce=0.0000 cluster_nce=0.0000 history_nce=0.0000 history_nce_1to2=0.0000 history_nce_2to1=0.0000 history_nce_weighted=0.0000 history_applied_fraction=0.0000 base_loss=0.5255 lfss_ls=0.0000 lfss_li=0.0000 dec=0.4250
+epoch=4 / num_epochs=6
+history_contrast_enabled=False history_source_epoch=None
+history_encoder_source=None encoder_ema_updates_start=0
+batch=0025 loss=0.5930 representation_loss=0.3564 clustering_loss=0.4732 instance_nce=0.0000 cluster_nce=0.0000 history_nce=0.0000 history_nce_weighted=0.0000 lfss_ls=0.0000 lfss_li=0.0000 
+batch=0050 loss=0.5490 representation_loss=0.3151 clustering_loss=0.4677 instance_nce=0.0000 cluster_nce=0.0000 history_nce=0.0000 history_nce_weighted=0.0000 lfss_ls=0.0000 lfss_li=0.0000 
+batch=0075 loss=0.5768 representation_loss=0.3540 clustering_loss=0.4456 instance_nce=0.0000 cluster_nce=0.0000 history_nce=0.0000 history_nce_weighted=0.0000 lfss_ls=0.0000 lfss_li=0.0000 
+batch=0100 loss=0.5188 representation_loss=0.2945 clustering_loss=0.4486 instance_nce=0.0000 cluster_nce=0.0000 history_nce=0.0000 history_nce_weighted=0.0000 lfss_ls=0.0000 lfss_li=0.0000 
+batch=0125 loss=0.6495 representation_loss=0.4231 clustering_loss=0.4527 instance_nce=0.0000 cluster_nce=0.0000 history_nce=0.0000 history_nce_weighted=0.0000 lfss_ls=0.0000 lfss_li=0.0000 
+batch=0150 loss=0.5382 representation_loss=0.3201 clustering_loss=0.4362 instance_nce=0.0000 cluster_nce=0.0000 history_nce=0.0000 history_nce_weighted=0.0000 lfss_ls=0.0000 lfss_li=0.0000 
+batch=0175 loss=0.5157 representation_loss=0.2908 clustering_loss=0.4497 instance_nce=0.0000 cluster_nce=0.0000 history_nce=0.0000 history_nce_weighted=0.0000 lfss_ls=0.0000 lfss_li=0.0000 
+batch=0200 loss=0.4765 representation_loss=0.2614 clustering_loss=0.4302 instance_nce=0.0000 cluster_nce=0.0000 history_nce=0.0000 history_nce_weighted=0.0000 lfss_ls=0.0000 lfss_li=0.0000 
+batch=0225 loss=0.4984 representation_loss=0.2687 clustering_loss=0.4593 instance_nce=0.0000 cluster_nce=0.0000 history_nce=0.0000 history_nce_weighted=0.0000 lfss_ls=0.0000 lfss_li=0.0000 
+batch=0250 loss=0.5631 representation_loss=0.3410 clustering_loss=0.4443 instance_nce=0.0000 cluster_nce=0.0000 history_nce=0.0000 history_nce_weighted=0.0000 lfss_ls=0.0000 lfss_li=0.0000 
+batch=0275 loss=0.4935 representation_loss=0.2807 clustering_loss=0.4257 instance_nce=0.0000 cluster_nce=0.0000 history_nce=0.0000 history_nce_weighted=0.0000 lfss_ls=0.0000 lfss_li=0.0000 
+batch=0300 loss=0.6137 representation_loss=0.3865 clustering_loss=0.4545 instance_nce=0.0000 cluster_nce=0.0000 history_nce=0.0000 history_nce_weighted=0.0000 lfss_ls=0.0000 lfss_li=0.0000 
+batch=0325 loss=0.5029 representation_loss=0.2998 clustering_loss=0.4064 instance_nce=0.0000 cluster_nce=0.0000 history_nce=0.0000 history_nce_weighted=0.0000 lfss_ls=0.0000 lfss_li=0.0000 
+batch=0350 loss=0.5665 representation_loss=0.3522 clustering_loss=0.4287 instance_nce=0.0000 cluster_nce=0.0000 history_nce=0.0000 history_nce_weighted=0.0000 lfss_ls=0.0000 lfss_li=0.0000 
+batch=0375 loss=0.5860 representation_loss=0.3657 clustering_loss=0.4407 instance_nce=0.0000 cluster_nce=0.0000 history_nce=0.0000 history_nce_weighted=0.0000 lfss_ls=0.0000 lfss_li=0.0000 
+batch=0400 loss=0.4691 representation_loss=0.2598 clustering_loss=0.4186 instance_nce=0.0000 cluster_nce=0.0000 history_nce=0.0000 history_nce_weighted=0.0000 lfss_ls=0.0000 lfss_li=0.0000 
+batch=0425 loss=0.5559 representation_loss=0.3331 clustering_loss=0.4456 instance_nce=0.0000 cluster_nce=0.0000 history_nce=0.0000 history_nce_weighted=0.0000 lfss_ls=0.0000 lfss_li=0.0000 
+batch=0450 loss=0.5880 representation_loss=0.3661 clustering_loss=0.4439 instance_nce=0.0000 cluster_nce=0.0000 history_nce=0.0000 history_nce_weighted=0.0000 lfss_ls=0.0000 lfss_li=0.0000 
+batch=0475 loss=0.5576 representation_loss=0.3349 clustering_loss=0.4454 instance_nce=0.0000 cluster_nce=0.0000 history_nce=0.0000 history_nce_weighted=0.0000 lfss_ls=0.0000 lfss_li=0.0000 
+batch=0500 loss=0.5304 representation_loss=0.3085 clustering_loss=0.4439 instance_nce=0.0000 cluster_nce=0.0000 history_nce=0.0000 history_nce_weighted=0.0000 lfss_ls=0.0000 lfss_li=0.0000 
+batch=0525 loss=0.5090 representation_loss=0.2994 clustering_loss=0.4193 instance_nce=0.0000 cluster_nce=0.0000 history_nce=0.0000 history_nce_weighted=0.0000 lfss_ls=0.0000 lfss_li=0.0000 
+batch=0550 loss=0.5381 representation_loss=0.3161 clustering_loss=0.4441 instance_nce=0.0000 cluster_nce=0.0000 history_nce=0.0000 history_nce_weighted=0.0000 lfss_ls=0.0000 lfss_li=0.0000 
+batch=0575 loss=0.5193 representation_loss=0.3013 clustering_loss=0.4361 instance_nce=0.0000 cluster_nce=0.0000 history_nce=0.0000 history_nce_weighted=0.0000 lfss_ls=0.0000 lfss_li=0.0000 
+batch=0600 loss=0.5137 representation_loss=0.2958 clustering_loss=0.4358 instance_nce=0.0000 cluster_nce=0.0000 history_nce=0.0000 history_nce_weighted=0.0000 lfss_ls=0.0000 lfss_li=0.0000 
+batch=0625 loss=0.5021 representation_loss=0.2946 clustering_loss=0.4149 instance_nce=0.0000 cluster_nce=0.0000 history_nce=0.0000 history_nce_weighted=0.0000 lfss_ls=0.0000 lfss_li=0.0000 
+batch=0650 loss=0.4948 representation_loss=0.2925 clustering_loss=0.4046 instance_nce=0.0000 cluster_nce=0.0000 history_nce=0.0000 history_nce_weighted=0.0000 lfss_ls=0.0000 lfss_li=0.0000 
+batch=0675 loss=0.5171 representation_loss=0.3212 clustering_loss=0.3919 instance_nce=0.0000 cluster_nce=0.0000 history_nce=0.0000 history_nce_weighted=0.0000 lfss_ls=0.0000 lfss_li=0.0000 
+batch=0700 loss=0.5733 representation_loss=0.3469 clustering_loss=0.4528 instance_nce=0.0000 cluster_nce=0.0000 history_nce=0.0000 history_nce_weighted=0.0000 lfss_ls=0.0000 lfss_li=0.0000 
+batch=0725 loss=0.5159 representation_loss=0.3163 clustering_loss=0.3991 instance_nce=0.0000 cluster_nce=0.0000 history_nce=0.0000 history_nce_weighted=0.0000 lfss_ls=0.0000 lfss_li=0.0000 
+batch=0750 loss=0.4861 representation_loss=0.2982 clustering_loss=0.3758 instance_nce=0.0000 cluster_nce=0.0000 history_nce=0.0000 history_nce_weighted=0.0000 lfss_ls=0.0000 lfss_li=0.0000 
+batch=0775 loss=0.5163 representation_loss=0.3130 clustering_loss=0.4066 instance_nce=0.0000 cluster_nce=0.0000 history_nce=0.0000 history_nce_weighted=0.0000 lfss_ls=0.0000 lfss_li=0.0000 
+batch=0800 loss=0.4884 representation_loss=0.2730 clustering_loss=0.4309 instance_nce=0.0000 cluster_nce=0.0000 history_nce=0.0000 history_nce_weighted=0.0000 lfss_ls=0.0000 lfss_li=0.0000 
+batch=0825 loss=0.5375 representation_loss=0.3451 clustering_loss=0.3846 instance_nce=0.0000 cluster_nce=0.0000 history_nce=0.0000 history_nce_weighted=0.0000 lfss_ls=0.0000 lfss_li=0.0000 
+batch=0850 loss=0.5383 representation_loss=0.3355 clustering_loss=0.4055 instance_nce=0.0000 cluster_nce=0.0000 history_nce=0.0000 history_nce_weighted=0.0000 lfss_ls=0.0000 lfss_li=0.0000 
+batch=0875 loss=0.4842 representation_loss=0.2604 clustering_loss=0.4476 instance_nce=0.0000 cluster_nce=0.0000 history_nce=0.0000 history_nce_weighted=0.0000 lfss_ls=0.0000 lfss_li=0.0000 
+batch=0900 loss=0.5114 representation_loss=0.2970 clustering_loss=0.4288 instance_nce=0.0000 cluster_nce=0.0000 history_nce=0.0000 history_nce_weighted=0.0000 lfss_ls=0.0000 lfss_li=0.0000 
+batch=0925 loss=0.4982 representation_loss=0.2915 clustering_loss=0.4134 instance_nce=0.0000 cluster_nce=0.0000 history_nce=0.0000 history_nce_weighted=0.0000 lfss_ls=0.0000 lfss_li=0.0000 
+batch=0950 loss=0.4795 representation_loss=0.2903 clustering_loss=0.3783 instance_nce=0.0000 cluster_nce=0.0000 history_nce=0.0000 history_nce_weighted=0.0000 lfss_ls=0.0000 lfss_li=0.0000 
+batch=0975 loss=0.5176 representation_loss=0.3206 clustering_loss=0.3939 instance_nce=0.0000 cluster_nce=0.0000 history_nce=0.0000 history_nce_weighted=0.0000 lfss_ls=0.0000 lfss_li=0.0000 
+batch=1000 loss=0.5536 representation_loss=0.3415 clustering_loss=0.4243 instance_nce=0.0000 cluster_nce=0.0000 history_nce=0.0000 history_nce_weighted=0.0000 lfss_ls=0.0000 lfss_li=0.0000 
+batch=1025 loss=0.4326 representation_loss=0.2388 clustering_loss=0.3876 instance_nce=0.0000 cluster_nce=0.0000 history_nce=0.0000 history_nce_weighted=0.0000 lfss_ls=0.0000 lfss_li=0.0000 
+batch=1050 loss=0.5717 representation_loss=0.3631 clustering_loss=0.4173 instance_nce=0.0000 cluster_nce=0.0000 history_nce=0.0000 history_nce_weighted=0.0000 lfss_ls=0.0000 lfss_li=0.0000 
+batch=1075 loss=0.5464 representation_loss=0.3487 clustering_loss=0.3954 instance_nce=0.0000 cluster_nce=0.0000 history_nce=0.0000 history_nce_weighted=0.0000 lfss_ls=0.0000 lfss_li=0.0000 
+batch=1100 loss=0.5940 representation_loss=0.3833 clustering_loss=0.4214 instance_nce=0.0000 cluster_nce=0.0000 history_nce=0.0000 history_nce_weighted=0.0000 lfss_ls=0.0000 lfss_li=0.0000 
+batch=1125 loss=0.5602 representation_loss=0.3466 clustering_loss=0.4271 instance_nce=0.0000 cluster_nce=0.0000 history_nce=0.0000 history_nce_weighted=0.0000 lfss_ls=0.0000 lfss_li=0.0000 
+encoder_ema_updates_end=0
+representation diagnostic saved: /root/tempo_fullscale/con-dtc-tempo-fullscale-v1/runs/tempo_fullscale/20261025_155146_890675_full_pre30_seed42/baseline/cluster/representation_history/epoch_004.pt samples=36000 cosine_previous=0.9986026287078857
+Train: loss=0.5262 mstm=0.3131 instance_nce=0.0000 cluster_nce=0.0000 history_nce=0.0000 history_nce_1to2=0.0000 history_nce_2to1=0.0000 history_nce_weighted=0.0000 history_applied_fraction=0.0000 base_loss=0.5262 lfss_ls=0.0000 lfss_li=0.0000 dec=0.4261
+epoch=5 / num_epochs=6
+history_contrast_enabled=False history_source_epoch=None
+history_encoder_source=None encoder_ema_updates_start=0
+batch=0025 loss=0.6021 representation_loss=0.3830 clustering_loss=0.4382 instance_nce=0.0000 cluster_nce=0.0000 history_nce=0.0000 history_nce_weighted=0.0000 lfss_ls=0.0000 lfss_li=0.0000 
+batch=0050 loss=0.4850 representation_loss=0.2620 clustering_loss=0.4460 instance_nce=0.0000 cluster_nce=0.0000 history_nce=0.0000 history_nce_weighted=0.0000 lfss_ls=0.0000 lfss_li=0.0000 
+batch=0075 loss=0.5440 representation_loss=0.3167 clustering_loss=0.4547 instance_nce=0.0000 cluster_nce=0.0000 history_nce=0.0000 history_nce_weighted=0.0000 lfss_ls=0.0000 lfss_li=0.0000 
+batch=0100 loss=0.4378 representation_loss=0.2244 clustering_loss=0.4270 instance_nce=0.0000 cluster_nce=0.0000 history_nce=0.0000 history_nce_weighted=0.0000 lfss_ls=0.0000 lfss_li=0.0000 
+batch=0125 loss=0.5269 representation_loss=0.2998 clustering_loss=0.4542 instance_nce=0.0000 cluster_nce=0.0000 history_nce=0.0000 history_nce_weighted=0.0000 lfss_ls=0.0000 lfss_li=0.0000 
+batch=0150 loss=0.5780 representation_loss=0.3637 clustering_loss=0.4286 instance_nce=0.0000 cluster_nce=0.0000 history_nce=0.0000 history_nce_weighted=0.0000 lfss_ls=0.0000 lfss_li=0.0000 
+batch=0175 loss=0.5007 representation_loss=0.2798 clustering_loss=0.4419 instance_nce=0.0000 cluster_nce=0.0000 history_nce=0.0000 history_nce_weighted=0.0000 lfss_ls=0.0000 lfss_li=0.0000 
+batch=0200 loss=0.5354 representation_loss=0.3098 clustering_loss=0.4511 instance_nce=0.0000 cluster_nce=0.0000 history_nce=0.0000 history_nce_weighted=0.0000 lfss_ls=0.0000 lfss_li=0.0000 
+batch=0225 loss=0.5332 representation_loss=0.3106 clustering_loss=0.4453 instance_nce=0.0000 cluster_nce=0.0000 history_nce=0.0000 history_nce_weighted=0.0000 lfss_ls=0.0000 lfss_li=0.0000 
+batch=0250 loss=0.5050 representation_loss=0.2875 clustering_loss=0.4351 instance_nce=0.0000 cluster_nce=0.0000 history_nce=0.0000 history_nce_weighted=0.0000 lfss_ls=0.0000 lfss_li=0.0000 
+batch=0275 loss=0.5160 representation_loss=0.2950 clustering_loss=0.4420 instance_nce=0.0000 cluster_nce=0.0000 history_nce=0.0000 history_nce_weighted=0.0000 lfss_ls=0.0000 lfss_li=0.0000 
+batch=0300 loss=0.5805 representation_loss=0.3610 clustering_loss=0.4391 instance_nce=0.0000 cluster_nce=0.0000 history_nce=0.0000 history_nce_weighted=0.0000 lfss_ls=0.0000 lfss_li=0.0000 
+batch=0325 loss=0.5323 representation_loss=0.3127 clustering_loss=0.4392 instance_nce=0.0000 cluster_nce=0.0000 history_nce=0.0000 history_nce_weighted=0.0000 lfss_ls=0.0000 lfss_li=0.0000 
+batch=0350 loss=0.5693 representation_loss=0.3486 clustering_loss=0.4413 instance_nce=0.0000 cluster_nce=0.0000 history_nce=0.0000 history_nce_weighted=0.0000 lfss_ls=0.0000 lfss_li=0.0000 
+batch=0375 loss=0.5085 representation_loss=0.2803 clustering_loss=0.4564 instance_nce=0.0000 cluster_nce=0.0000 history_nce=0.0000 history_nce_weighted=0.0000 lfss_ls=0.0000 lfss_li=0.0000 
+batch=0400 loss=0.4911 representation_loss=0.2757 clustering_loss=0.4307 instance_nce=0.0000 cluster_nce=0.0000 history_nce=0.0000 history_nce_weighted=0.0000 lfss_ls=0.0000 lfss_li=0.0000 
+batch=0425 loss=0.4730 representation_loss=0.2598 clustering_loss=0.4265 instance_nce=0.0000 cluster_nce=0.0000 history_nce=0.0000 history_nce_weighted=0.0000 lfss_ls=0.0000 lfss_li=0.0000 
+batch=0450 loss=0.4179 representation_loss=0.2050 clustering_loss=0.4260 instance_nce=0.0000 cluster_nce=0.0000 history_nce=0.0000 history_nce_weighted=0.0000 lfss_ls=0.0000 lfss_li=0.0000 
+batch=0475 loss=0.4975 representation_loss=0.3058 clustering_loss=0.3834 instance_nce=0.0000 cluster_nce=0.0000 history_nce=0.0000 history_nce_weighted=0.0000 lfss_ls=0.0000 lfss_li=0.0000 
+batch=0500 loss=0.6179 representation_loss=0.4062 clustering_loss=0.4234 instance_nce=0.0000 cluster_nce=0.0000 history_nce=0.0000 history_nce_weighted=0.0000 lfss_ls=0.0000 lfss_li=0.0000 
+batch=0525 loss=0.5155 representation_loss=0.3174 clustering_loss=0.3963 instance_nce=0.0000 cluster_nce=0.0000 history_nce=0.0000 history_nce_weighted=0.0000 lfss_ls=0.0000 lfss_li=0.0000 
+batch=0550 loss=0.4963 representation_loss=0.2911 clustering_loss=0.4105 instance_nce=0.0000 cluster_nce=0.0000 history_nce=0.0000 history_nce_weighted=0.0000 lfss_ls=0.0000 lfss_li=0.0000 
+batch=0575 loss=0.5339 representation_loss=0.3333 clustering_loss=0.4012 instance_nce=0.0000 cluster_nce=0.0000 history_nce=0.0000 history_nce_weighted=0.0000 lfss_ls=0.0000 lfss_li=0.0000 
+batch=0600 loss=0.5079 representation_loss=0.3028 clustering_loss=0.4102 instance_nce=0.0000 cluster_nce=0.0000 history_nce=0.0000 history_nce_weighted=0.0000 lfss_ls=0.0000 lfss_li=0.0000 
+batch=0625 loss=0.6473 representation_loss=0.4226 clustering_loss=0.4494 instance_nce=0.0000 cluster_nce=0.0000 history_nce=0.0000 history_nce_weighted=0.0000 lfss_ls=0.0000 lfss_li=0.0000 
+batch=0650 loss=0.5129 representation_loss=0.3132 clustering_loss=0.3992 instance_nce=0.0000 cluster_nce=0.0000 history_nce=0.0000 history_nce_weighted=0.0000 lfss_ls=0.0000 lfss_li=0.0000 
+batch=0675 loss=0.5077 representation_loss=0.3100 clustering_loss=0.3954 instance_nce=0.0000 cluster_nce=0.0000 history_nce=0.0000 history_nce_weighted=0.0000 lfss_ls=0.0000 lfss_li=0.0000 
+batch=0700 loss=0.4485 representation_loss=0.2469 clustering_loss=0.4032 instance_nce=0.0000 cluster_nce=0.0000 history_nce=0.0000 history_nce_weighted=0.0000 lfss_ls=0.0000 lfss_li=0.0000 
+batch=0725 loss=0.5026 representation_loss=0.2922 clustering_loss=0.4209 instance_nce=0.0000 cluster_nce=0.0000 history_nce=0.0000 history_nce_weighted=0.0000 lfss_ls=0.0000 lfss_li=0.0000 
+batch=0750 loss=0.5171 representation_loss=0.2990 clustering_loss=0.4360 instance_nce=0.0000 cluster_nce=0.0000 history_nce=0.0000 history_nce_weighted=0.0000 lfss_ls=0.0000 lfss_li=0.0000 
+batch=0775 loss=0.5146 representation_loss=0.3120 clustering_loss=0.4053 instance_nce=0.0000 cluster_nce=0.0000 history_nce=0.0000 history_nce_weighted=0.0000 lfss_ls=0.0000 lfss_li=0.0000 
+batch=0800 loss=0.4726 representation_loss=0.2751 clustering_loss=0.3949 instance_nce=0.0000 cluster_nce=0.0000 history_nce=0.0000 history_nce_weighted=0.0000 lfss_ls=0.0000 lfss_li=0.0000 
+batch=0825 loss=0.5106 representation_loss=0.3126 clustering_loss=0.3960 instance_nce=0.0000 cluster_nce=0.0000 history_nce=0.0000 history_nce_weighted=0.0000 lfss_ls=0.0000 lfss_li=0.0000 
+batch=0850 loss=0.5702 representation_loss=0.3497 clustering_loss=0.4410 instance_nce=0.0000 cluster_nce=0.0000 history_nce=0.0000 history_nce_weighted=0.0000 lfss_ls=0.0000 lfss_li=0.0000 
+batch=0875 loss=0.5175 representation_loss=0.3116 clustering_loss=0.4119 instance_nce=0.0000 cluster_nce=0.0000 history_nce=0.0000 history_nce_weighted=0.0000 lfss_ls=0.0000 lfss_li=0.0000 
+batch=0900 loss=0.5321 representation_loss=0.3396 clustering_loss=0.3850 instance_nce=0.0000 cluster_nce=0.0000 history_nce=0.0000 history_nce_weighted=0.0000 lfss_ls=0.0000 lfss_li=0.0000 
+batch=0925 loss=0.5896 representation_loss=0.3877 clustering_loss=0.4037 instance_nce=0.0000 cluster_nce=0.0000 history_nce=0.0000 history_nce_weighted=0.0000 lfss_ls=0.0000 lfss_li=0.0000 
+batch=0950 loss=0.5513 representation_loss=0.3479 clustering_loss=0.4067 instance_nce=0.0000 cluster_nce=0.0000 history_nce=0.0000 history_nce_weighted=0.0000 lfss_ls=0.0000 lfss_li=0.0000 
+batch=0975 loss=0.4620 representation_loss=0.2583 clustering_loss=0.4074 instance_nce=0.0000 cluster_nce=0.0000 history_nce=0.0000 history_nce_weighted=0.0000 lfss_ls=0.0000 lfss_li=0.0000 
+batch=1000 loss=0.5025 representation_loss=0.3152 clustering_loss=0.3746 instance_nce=0.0000 cluster_nce=0.0000 history_nce=0.0000 history_nce_weighted=0.0000 lfss_ls=0.0000 lfss_li=0.0000 
+batch=1025 loss=0.5333 representation_loss=0.3389 clustering_loss=0.3890 instance_nce=0.0000 cluster_nce=0.0000 history_nce=0.0000 history_nce_weighted=0.0000 lfss_ls=0.0000 lfss_li=0.0000 
+batch=1050 loss=0.4910 representation_loss=0.2902 clustering_loss=0.4017 instance_nce=0.0000 cluster_nce=0.0000 history_nce=0.0000 history_nce_weighted=0.0000 lfss_ls=0.0000 lfss_li=0.0000 
+batch=1075 loss=0.5115 representation_loss=0.3259 clustering_loss=0.3712 instance_nce=0.0000 cluster_nce=0.0000 history_nce=0.0000 history_nce_weighted=0.0000 lfss_ls=0.0000 lfss_li=0.0000 
+batch=1100 loss=0.4661 representation_loss=0.2770 clustering_loss=0.3781 instance_nce=0.0000 cluster_nce=0.0000 history_nce=0.0000 history_nce_weighted=0.0000 lfss_ls=0.0000 lfss_li=0.0000 
+batch=1125 loss=0.4736 representation_loss=0.2806 clustering_loss=0.3860 instance_nce=0.0000 cluster_nce=0.0000 history_nce=0.0000 history_nce_weighted=0.0000 lfss_ls=0.0000 lfss_li=0.0000 
+encoder_ema_updates_end=0
+representation diagnostic saved: /root/tempo_fullscale/con-dtc-tempo-fullscale-v1/runs/tempo_fullscale/20261025_155146_890675_full_pre30_seed42/baseline/cluster/representation_history/epoch_005.pt samples=36000 cosine_previous=0.9985588192939758
+Train: loss=0.5220 mstm=0.3125 instance_nce=0.0000 cluster_nce=0.0000 history_nce=0.0000 history_nce_1to2=0.0000 history_nce_2to1=0.0000 history_nce_weighted=0.0000 history_applied_fraction=0.0000 base_loss=0.5220 lfss_ls=0.0000 lfss_li=0.0000 dec=0.4190
+epoch=6 / num_epochs=6
+history_contrast_enabled=False history_source_epoch=None
+history_encoder_source=None encoder_ema_updates_start=0
+batch=0025 loss=0.5300 representation_loss=0.3138 clustering_loss=0.4323 instance_nce=0.0000 cluster_nce=0.0000 history_nce=0.0000 history_nce_weighted=0.0000 lfss_ls=0.0000 lfss_li=0.0000 
+batch=0050 loss=0.5136 representation_loss=0.3030 clustering_loss=0.4213 instance_nce=0.0000 cluster_nce=0.0000 history_nce=0.0000 history_nce_weighted=0.0000 lfss_ls=0.0000 lfss_li=0.0000 
+batch=0075 loss=0.4735 representation_loss=0.2380 clustering_loss=0.4710 instance_nce=0.0000 cluster_nce=0.0000 history_nce=0.0000 history_nce_weighted=0.0000 lfss_ls=0.0000 lfss_li=0.0000 
+batch=0100 loss=0.5067 representation_loss=0.2799 clustering_loss=0.4536 instance_nce=0.0000 cluster_nce=0.0000 history_nce=0.0000 history_nce_weighted=0.0000 lfss_ls=0.0000 lfss_li=0.0000 
+batch=0125 loss=0.4622 representation_loss=0.2418 clustering_loss=0.4409 instance_nce=0.0000 cluster_nce=0.0000 history_nce=0.0000 history_nce_weighted=0.0000 lfss_ls=0.0000 lfss_li=0.0000 
+batch=0150 loss=0.5163 representation_loss=0.3179 clustering_loss=0.3968 instance_nce=0.0000 cluster_nce=0.0000 history_nce=0.0000 history_nce_weighted=0.0000 lfss_ls=0.0000 lfss_li=0.0000 
+batch=0175 loss=0.4763 representation_loss=0.2630 clustering_loss=0.4266 instance_nce=0.0000 cluster_nce=0.0000 history_nce=0.0000 history_nce_weighted=0.0000 lfss_ls=0.0000 lfss_li=0.0000 
+batch=0200 loss=0.5248 representation_loss=0.3063 clustering_loss=0.4370 instance_nce=0.0000 cluster_nce=0.0000 history_nce=0.0000 history_nce_weighted=0.0000 lfss_ls=0.0000 lfss_li=0.0000 
+batch=0225 loss=0.6201 representation_loss=0.3999 clustering_loss=0.4405 instance_nce=0.0000 cluster_nce=0.0000 history_nce=0.0000 history_nce_weighted=0.0000 lfss_ls=0.0000 lfss_li=0.0000 
+batch=0250 loss=0.4795 representation_loss=0.2780 clustering_loss=0.4030 instance_nce=0.0000 cluster_nce=0.0000 history_nce=0.0000 history_nce_weighted=0.0000 lfss_ls=0.0000 lfss_li=0.0000 
+batch=0275 loss=0.5282 representation_loss=0.3127 clustering_loss=0.4311 instance_nce=0.0000 cluster_nce=0.0000 history_nce=0.0000 history_nce_weighted=0.0000 lfss_ls=0.0000 lfss_li=0.0000 
+batch=0300 loss=0.4842 representation_loss=0.2854 clustering_loss=0.3975 instance_nce=0.0000 cluster_nce=0.0000 history_nce=0.0000 history_nce_weighted=0.0000 lfss_ls=0.0000 lfss_li=0.0000 
+batch=0325 loss=0.6108 representation_loss=0.3904 clustering_loss=0.4407 instance_nce=0.0000 cluster_nce=0.0000 history_nce=0.0000 history_nce_weighted=0.0000 lfss_ls=0.0000 lfss_li=0.0000 
+batch=0350 loss=0.5749 representation_loss=0.3724 clustering_loss=0.4050 instance_nce=0.0000 cluster_nce=0.0000 history_nce=0.0000 history_nce_weighted=0.0000 lfss_ls=0.0000 lfss_li=0.0000 
+batch=0375 loss=0.5466 representation_loss=0.3144 clustering_loss=0.4642 instance_nce=0.0000 cluster_nce=0.0000 history_nce=0.0000 history_nce_weighted=0.0000 lfss_ls=0.0000 lfss_li=0.0000 
+batch=0400 loss=0.5118 representation_loss=0.3034 clustering_loss=0.4169 instance_nce=0.0000 cluster_nce=0.0000 history_nce=0.0000 history_nce_weighted=0.0000 lfss_ls=0.0000 lfss_li=0.0000 
+batch=0425 loss=0.5476 representation_loss=0.3320 clustering_loss=0.4312 instance_nce=0.0000 cluster_nce=0.0000 history_nce=0.0000 history_nce_weighted=0.0000 lfss_ls=0.0000 lfss_li=0.0000 
+batch=0450 loss=0.4613 representation_loss=0.2580 clustering_loss=0.4065 instance_nce=0.0000 cluster_nce=0.0000 history_nce=0.0000 history_nce_weighted=0.0000 lfss_ls=0.0000 lfss_li=0.0000 
+batch=0475 loss=0.5766 representation_loss=0.3445 clustering_loss=0.4642 instance_nce=0.0000 cluster_nce=0.0000 history_nce=0.0000 history_nce_weighted=0.0000 lfss_ls=0.0000 lfss_li=0.0000 
+batch=0500 loss=0.5361 representation_loss=0.3414 clustering_loss=0.3893 instance_nce=0.0000 cluster_nce=0.0000 history_nce=0.0000 history_nce_weighted=0.0000 lfss_ls=0.0000 lfss_li=0.0000 
+batch=0525 loss=0.5473 representation_loss=0.3344 clustering_loss=0.4258 instance_nce=0.0000 cluster_nce=0.0000 history_nce=0.0000 history_nce_weighted=0.0000 lfss_ls=0.0000 lfss_li=0.0000 
+batch=0550 loss=0.4858 representation_loss=0.2695 clustering_loss=0.4326 instance_nce=0.0000 cluster_nce=0.0000 history_nce=0.0000 history_nce_weighted=0.0000 lfss_ls=0.0000 lfss_li=0.0000 
+batch=0575 loss=0.4938 representation_loss=0.2878 clustering_loss=0.4119 instance_nce=0.0000 cluster_nce=0.0000 history_nce=0.0000 history_nce_weighted=0.0000 lfss_ls=0.0000 lfss_li=0.0000 
+batch=0600 loss=0.5449 representation_loss=0.3381 clustering_loss=0.4135 instance_nce=0.0000 cluster_nce=0.0000 history_nce=0.0000 history_nce_weighted=0.0000 lfss_ls=0.0000 lfss_li=0.0000 
+batch=0625 loss=0.4489 representation_loss=0.2334 clustering_loss=0.4309 instance_nce=0.0000 cluster_nce=0.0000 history_nce=0.0000 history_nce_weighted=0.0000 lfss_ls=0.0000 lfss_li=0.0000 
+batch=0650 loss=0.5607 representation_loss=0.3495 clustering_loss=0.4225 instance_nce=0.0000 cluster_nce=0.0000 history_nce=0.0000 history_nce_weighted=0.0000 lfss_ls=0.0000 lfss_li=0.0000 
+batch=0675 loss=0.5854 representation_loss=0.3756 clustering_loss=0.4195 instance_nce=0.0000 cluster_nce=0.0000 history_nce=0.0000 history_nce_weighted=0.0000 lfss_ls=0.0000 lfss_li=0.0000 
+batch=0700 loss=0.5281 representation_loss=0.3295 clustering_loss=0.3972 instance_nce=0.0000 cluster_nce=0.0000 history_nce=0.0000 history_nce_weighted=0.0000 lfss_ls=0.0000 lfss_li=0.0000 
+batch=0725 loss=0.4563 representation_loss=0.2581 clustering_loss=0.3964 instance_nce=0.0000 cluster_nce=0.0000 history_nce=0.0000 history_nce_weighted=0.0000 lfss_ls=0.0000 lfss_li=0.0000 
+batch=0750 loss=0.5548 representation_loss=0.3495 clustering_loss=0.4106 instance_nce=0.0000 cluster_nce=0.0000 history_nce=0.0000 history_nce_weighted=0.0000 lfss_ls=0.0000 lfss_li=0.0000 
+batch=0775 loss=0.4798 representation_loss=0.2630 clustering_loss=0.4337 instance_nce=0.0000 cluster_nce=0.0000 history_nce=0.0000 history_nce_weighted=0.0000 lfss_ls=0.0000 lfss_li=0.0000 
+batch=0800 loss=0.5795 representation_loss=0.3748 clustering_loss=0.4095 instance_nce=0.0000 cluster_nce=0.0000 history_nce=0.0000 history_nce_weighted=0.0000 lfss_ls=0.0000 lfss_li=0.0000 
+batch=0825 loss=0.5621 representation_loss=0.3523 clustering_loss=0.4197 instance_nce=0.0000 cluster_nce=0.0000 history_nce=0.0000 history_nce_weighted=0.0000 lfss_ls=0.0000 lfss_li=0.0000 
+batch=0850 loss=0.4377 representation_loss=0.2516 clustering_loss=0.3721 instance_nce=0.0000 cluster_nce=0.0000 history_nce=0.0000 history_nce_weighted=0.0000 lfss_ls=0.0000 lfss_li=0.0000 
+batch=0875 loss=0.4703 representation_loss=0.2615 clustering_loss=0.4176 instance_nce=0.0000 cluster_nce=0.0000 history_nce=0.0000 history_nce_weighted=0.0000 lfss_ls=0.0000 lfss_li=0.0000 
+batch=0900 loss=0.5088 representation_loss=0.2827 clustering_loss=0.4522 instance_nce=0.0000 cluster_nce=0.0000 history_nce=0.0000 history_nce_weighted=0.0000 lfss_ls=0.0000 lfss_li=0.0000 
+batch=0925 loss=0.4878 representation_loss=0.2456 clustering_loss=0.4843 instance_nce=0.0000 cluster_nce=0.0000 history_nce=0.0000 history_nce_weighted=0.0000 lfss_ls=0.0000 lfss_li=0.0000 
+batch=0950 loss=0.5173 representation_loss=0.2747 clustering_loss=0.4852 instance_nce=0.0000 cluster_nce=0.0000 history_nce=0.0000 history_nce_weighted=0.0000 lfss_ls=0.0000 lfss_li=0.0000 
+batch=0975 loss=0.4954 representation_loss=0.3057 clustering_loss=0.3795 instance_nce=0.0000 cluster_nce=0.0000 history_nce=0.0000 history_nce_weighted=0.0000 lfss_ls=0.0000 lfss_li=0.0000 
+batch=1000 loss=0.5183 representation_loss=0.3186 clustering_loss=0.3994 instance_nce=0.0000 cluster_nce=0.0000 history_nce=0.0000 history_nce_weighted=0.0000 lfss_ls=0.0000 lfss_li=0.0000 
+batch=1025 loss=0.4719 representation_loss=0.2634 clustering_loss=0.4169 instance_nce=0.0000 cluster_nce=0.0000 history_nce=0.0000 history_nce_weighted=0.0000 lfss_ls=0.0000 lfss_li=0.0000 
+batch=1050 loss=0.4156 representation_loss=0.2122 clustering_loss=0.4068 instance_nce=0.0000 cluster_nce=0.0000 history_nce=0.0000 history_nce_weighted=0.0000 lfss_ls=0.0000 lfss_li=0.0000 
+batch=1075 loss=0.5485 representation_loss=0.3361 clustering_loss=0.4247 instance_nce=0.0000 cluster_nce=0.0000 history_nce=0.0000 history_nce_weighted=0.0000 lfss_ls=0.0000 lfss_li=0.0000 
+batch=1100 loss=0.5343 representation_loss=0.3362 clustering_loss=0.3962 instance_nce=0.0000 cluster_nce=0.0000 history_nce=0.0000 history_nce_weighted=0.0000 lfss_ls=0.0000 lfss_li=0.0000 
+batch=1125 loss=0.5156 representation_loss=0.3096 clustering_loss=0.4121 instance_nce=0.0000 cluster_nce=0.0000 history_nce=0.0000 history_nce_weighted=0.0000 lfss_ls=0.0000 lfss_li=0.0000 
+encoder_ema_updates_end=0
+representation diagnostic saved: /root/tempo_fullscale/con-dtc-tempo-fullscale-v1/runs/tempo_fullscale/20261025_155146_890675_full_pre30_seed42/baseline/cluster/representation_history/epoch_006.pt samples=36000 cosine_previous=0.9990058541297913
+Train: loss=0.5215 mstm=0.3109 instance_nce=0.0000 cluster_nce=0.0000 history_nce=0.0000 history_nce_1to2=0.0000 history_nce_2to1=0.0000 history_nce_weighted=0.0000 history_applied_fraction=0.0000 base_loss=0.5215 lfss_ls=0.0000 lfss_li=0.0000 dec=0.4213
+best base train_loss:  0.4629807274606493
+device: cuda
+dataset: portoLocalTempo4Full_v1
+cluster counts: tensor([1017,  941,  782,  864,  982, 1152, 1174,  832,  684,  959, 1679, 1001,
+        1217, 1007, 1355,  900,  908,  877,  998,  866,  918, 1148, 1143,  867,
+        1097, 1271,  864, 1147, 1033,  982,  941,  927,  984,  997,  860,  626])
+metrics: {'uacc': 0.30877777777777776, 'nmi': 0.6217011667066148, 'ri': 0.9585872616831949, 'ari': 0.24577707324306114}
+epoch 0: UACC=0.3773, recluster=0.3775, labelled probe=0.5045
+epoch 1: UACC=0.3603, recluster=0.3317, labelled probe=0.4391
+epoch 2: UACC=0.3446, recluster=0.3297, labelled probe=0.3907
+epoch 3: UACC=0.3201, recluster=0.3207, labelled probe=0.3532
+epoch 4: UACC=0.3163, recluster=0.3137, labelled probe=0.3298
+epoch 5: UACC=0.3093, recluster=0.3116, labelled probe=0.3194
+epoch 6: UACC=0.3088, recluster=0.3091, labelled probe=0.3138

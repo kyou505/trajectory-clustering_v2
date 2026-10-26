@@ -1,0 +1,65 @@
+{
+  "dataset": "portoLocalTempo4Small_v1",
+  "version": 1,
+  "synthetic_controlled_pilot": true,
+  "seed": 42,
+  "num_bases": 3,
+  "modes": [
+    "reference",
+    "early_fast",
+    "middle_fast",
+    "late_fast"
+  ],
+  "samples_per_class": 200,
+  "labels": "4 * base_index + mode_index",
+  "source_base_trip_ids": [
+    "1393827644620000692",
+    "1388034538620000179",
+    "1376574516620000009"
+  ],
+  "profiles": {
+    "reference": [
+      0.3333333333333333,
+      0.3333333333333333,
+      0.3333333333333333
+    ],
+    "early_fast": [
+      0.2,
+      0.4,
+      0.4
+    ],
+    "middle_fast": [
+      0.4,
+      0.2,
+      0.4
+    ],
+    "late_fast": [
+      0.4,
+      0.4,
+      0.2
+    ]
+  },
+  "segment_definition": "equal cumulative arc length",
+  "time_curve": "monotone PCHIP through segment-boundary cumulative durations",
+  "duration_minutes": [
+    18,
+    22
+  ],
+  "start_minutes": [
+    475,
+    485
+  ],
+  "spatial_noise_std_m": 1,
+  "resampled_points": 49,
+  "deleted_interior_points": 4,
+  "padded_length": 60,
+  "time_fraction_jitter": "uniform(-0.008,0.008), centered to sum zero",
+  "pointwise_time_noise": false,
+  "training_time_quantization_seconds": 60,
+  "nuisance_draws_paired_across_modes": true,
+  "limitations": [
+    "Three public Porto paths only; constructed rhythms, not real behavior labels.",
+    "Known rhythm signatures are intentionally separable; this is a mechanism pilot, not a hard benchmark.",
+    "No old data or checkpoint is overwritten."
+  ]
+}

@@ -1,0 +1,23 @@
+__pycache__/
+*.py[cod]
+.DS_Store
+artifacts/
+*.log
+
+# 参照 con-dtc：运行目录默认忽略，仅提交轻量、可审阅的实验记录。
+/runs/**
+!/runs/**/
+!/runs/README.md
+!/runs/**/config.yaml
+!/runs/**/metrics.json
+!/runs/**/train.log
+!/runs/**/completed.json
+!/runs/**/failed.json
+!/runs/**/environment.json
+!/runs/**/suite_identity.json
+
+# 诊断明细和逐轮大文件仅保留在本地。
+/runs/**/analysis/
+/runs/**/representation_history/
+/runs/**/target_history/
+/runs/**/checkpoints/

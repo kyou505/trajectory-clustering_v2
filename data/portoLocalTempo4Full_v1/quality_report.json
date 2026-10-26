@@ -1,0 +1,123 @@
+{
+  "samples": 36000,
+  "clusters": 36,
+  "per_class": {
+    "0": 1000,
+    "1": 1000,
+    "2": 1000,
+    "3": 1000,
+    "4": 1000,
+    "5": 1000,
+    "6": 1000,
+    "7": 1000,
+    "8": 1000,
+    "9": 1000,
+    "10": 1000,
+    "11": 1000,
+    "12": 1000,
+    "13": 1000,
+    "14": 1000,
+    "15": 1000,
+    "16": 1000,
+    "17": 1000,
+    "18": 1000,
+    "19": 1000,
+    "20": 1000,
+    "21": 1000,
+    "22": 1000,
+    "23": 1000,
+    "24": 1000,
+    "25": 1000,
+    "26": 1000,
+    "27": 1000,
+    "28": 1000,
+    "29": 1000,
+    "30": 1000,
+    "31": 1000,
+    "32": 1000,
+    "33": 1000,
+    "34": 1000,
+    "35": 1000
+  },
+  "same_geometry_duration_start_and_count_within_four_mode_family": true,
+  "continuous_time_strictly_increasing": true,
+  "continuous_rhythm_labels_valid": true,
+  "encoded_time_nondecreasing": true,
+  "known_profile_sanity_accuracy_after_minute_encoding": 0.9998888888888889,
+  "profile_sanity_note": "Known-profile, three-anchor interpolation heuristic, not clustering performance or proof of information loss.",
+  "quantized_template_mismatches_retained": [
+    {
+      "row_index": 11184,
+      "family_id": 2796,
+      "true_mode": "reference",
+      "template_prediction": "middle_fast",
+      "observed_fractions": [
+        0.3684210526315789,
+        0.2631578947368421,
+        0.3684210526315789
+      ]
+    },
+    {
+      "row_index": 24236,
+      "family_id": 6059,
+      "true_mode": "reference",
+      "template_prediction": "middle_fast",
+      "observed_fractions": [
+        0.3684210526315789,
+        0.2631578947368421,
+        0.3684210526315789
+      ]
+    },
+    {
+      "row_index": 24976,
+      "family_id": 6244,
+      "true_mode": "reference",
+      "template_prediction": "middle_fast",
+      "observed_fractions": [
+        0.3684210526315789,
+        0.2631578947368421,
+        0.3684210526315789
+      ]
+    },
+    {
+      "row_index": 34384,
+      "family_id": 8596,
+      "true_mode": "reference",
+      "template_prediction": "middle_fast",
+      "observed_fractions": [
+        0.3684210526315789,
+        0.2631578947368421,
+        0.3684210526315789
+      ]
+    }
+  ],
+  "samples_filtered_by_template_probe": 0,
+  "mean_observed_fractions_by_mode": {
+    "reference": [
+      0.3336571387784867,
+      0.3328533897876098,
+      0.3334894714339183
+    ],
+    "early_fast": [
+      0.2002462697850042,
+      0.3995544582556334,
+      0.4001992719593589
+    ],
+    "middle_fast": [
+      0.39965532426745687,
+      0.20028208733814581,
+      0.4000625883943857
+    ],
+    "late_fast": [
+      0.39977322831489354,
+      0.4004367138736347,
+      0.19979005781146833
+    ]
+  },
+  "pilot_rows_preserved": 2400,
+  "original_model_input_tokens_preserved": true,
+  "metadata_difference": "family_id remapped to base_index * 1000 + replicate_index; pilot_row_index records the original row",
+  "duplicate_encoded_location_time_pairs": 0,
+  "family_count": 9000,
+  "independent_base_routes": 9
+}

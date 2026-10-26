@@ -1,0 +1,95 @@
+{
+  "dataset": "portoLocalTempo4Full_v1",
+  "version": 1,
+  "synthetic_controlled_pilot": false,
+  "seed": 42,
+  "num_bases": 9,
+  "modes": [
+    "reference",
+    "early_fast",
+    "middle_fast",
+    "late_fast"
+  ],
+  "samples_per_class": 1000,
+  "labels": "4 * base_index + mode_index",
+  "source_base_trip_ids": [
+    "1393827644620000692",
+    "1388034538620000179",
+    "1376574516620000009",
+    "1392708307620000484",
+    "1373989168620000037",
+    "1387446664620000251",
+    "1376296559620000217",
+    "1401769440620000514",
+    "1379399187620000338"
+  ],
+  "profiles": {
+    "reference": [
+      0.3333333333333333,
+      0.3333333333333333,
+      0.3333333333333333
+    ],
+    "early_fast": [
+      0.2,
+      0.4,
+      0.4
+    ],
+    "middle_fast": [
+      0.4,
+      0.2,
+      0.4
+    ],
+    "late_fast": [
+      0.4,
+      0.4,
+      0.2
+    ]
+  },
+  "segment_definition": "equal cumulative arc length",
+  "time_curve": "monotone PCHIP through segment-boundary cumulative durations",
+  "duration_minutes": [
+    18,
+    22
+  ],
+  "start_minutes": [
+    475,
+    485
+  ],
+  "spatial_noise_std_m": 1,
+  "resampled_points": 49,
+  "deleted_interior_points": 4,
+  "padded_length": 60,
+  "time_fraction_jitter": "uniform(-0.008,0.008), centered to sum zero",
+  "pointwise_time_noise": false,
+  "training_time_quantization_seconds": 60,
+  "nuisance_draws_paired_across_modes": true,
+  "limitations": [
+    "Synthetic rhythms on three or nine fixed Porto routes; more samples do not mean more independent routes.",
+    "Changing sample count at fixed epochs also changes optimizer update count.",
+    "The full dataset changes both route diversity and class count; use the 3-route scale control to hold those fixed.",
+    "Profile sanity uses the known generating rule and is not model performance."
+  ],
+  "synthetic_controlled_scale_experiment": true,
+  "total_samples": 36000,
+  "num_clusters": 36,
+  "generation_streams": [
+    {
+      "seed": 42,
+      "replicates_per_route": 200
+    },
+    {
+      "seed": 43,
+      "replicates_per_route": 800
+    }
+  ],
+  "vocabulary_rule": "Preserve all pilot token IDs, append scale-route tokens, then additional full-route tokens.",
+  "original_porto_reference": {
+    "samples": 27305,
+    "classes": 27,
+    "base_routes": 9,
+    "cluster_size_range": {
+      "min": 900,
+      "max": 1100
+    }
+  }
+}

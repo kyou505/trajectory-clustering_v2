@@ -1,0 +1,45 @@
+{
+  "samples": 2400,
+  "clusters": 12,
+  "per_class": {
+    "0": 200,
+    "1": 200,
+    "2": 200,
+    "3": 200,
+    "4": 200,
+    "5": 200,
+    "6": 200,
+    "7": 200,
+    "8": 200,
+    "9": 200,
+    "10": 200,
+    "11": 200
+  },
+  "same_geometry_duration_start_and_count_within_four_mode_family": true,
+  "continuous_time_strictly_increasing": true,
+  "encoded_time_nondecreasing": true,
+  "known_profile_sanity_accuracy_after_minute_encoding": 1.0,
+  "profile_sanity_note": "Checks the designed signal using known generating profiles and path progress; not a learned baseline or clustering result.",
+  "mean_observed_fractions_by_mode": {
+    "reference": [
+      0.3329109516214785,
+      0.3339124093904803,
+      0.3331766389880429
+    ],
+    "early_fast": [
+      0.19986607933976502,
+      0.3990158972768634,
+      0.40111802338337504
+    ],
+    "middle_fast": [
+      0.3987143964709763,
+      0.2005626998894557,
+      0.4007229036395712
+    ],
+    "late_fast": [
+      0.3989247012733863,
+      0.40177428630498907,
+      0.19930101242162793
+    ]
+  }
+}
