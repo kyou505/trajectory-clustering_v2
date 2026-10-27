@@ -1,4 +1,4 @@
-"""基线与速率三元组配置；schema v3 明确采用采样点序号定位时间扰动。"""
+"""单分支 v3 / 路径节奏双分支 v4；统一采用采样点序号定位时间扰动。"""
 from copy import deepcopy
 from pathlib import Path
 import math
@@ -7,12 +7,14 @@ import yaml
 
 ROOT = Path(__file__).resolve().parents[2]
 # tempo_only 沿用旧实验组名，模块与配置字段统一使用 speed_pattern。
-GROUPS = {"baseline": False, "tempo_only": True}
+GROUPS = {"baseline": False, "tempo_only": True, "dual_branch": True}
+DEFAULT_GROUPS = ("baseline", "tempo_only")
 # 每个方法只维护一份完整配置；文件名说明方法、数据规模和预训练预算。
 # group 保持历史标识，以兼容已有检查点和离线结果。
 CONFIG_FILES = {
     "baseline": "configs/baseline/condtc_porto_full_baseline_pre30.yaml",
     "tempo_only": "configs/ablation/spdtc_porto_full_speed_only_pre30.yaml",
+    "dual_branch": "configs/architecture/spdtc_porto_full_dual_branch_pre30.yaml",
 }
 PRESETS = {
     "small": ("portoLocalTempo4Small_v1", 2400, 12, 15),
@@ -36,10 +38,17 @@ DEFAULT = {
 
 
 def validate(cfg):
-    # 旧版本采用几何沿程进度，不自动解释成当前增强规则。
     cfg = deepcopy(cfg)
-    if not isinstance(cfg, dict) or type(cfg.get('schema_version')) is not int or cfg['schema_version'] != 3:
-        raise ValueError('Training requires schema v3 with sample_index warping; use the current configs for a new run')
+    if not isinstance(cfg, dict) or type(cfg.get('schema_version')) is not int or cfg['schema_version'] not in (3, 4):
+        raise ValueError('Training requires schema v3 (single branch) or v4 (dual branch), with sample_index warping')
+    reference = deepcopy(DEFAULT)
+    if cfg['schema_version'] == 4:
+        reference['dual_branch'] = {'path_weight': 0.5, 'distance_scale': 100.0,
+                                    'save_representations': True}
+        if cfg.get('group') != 'dual_branch':
+            raise ValueError('Schema v4 is reserved for the dual_branch architecture')
+    elif cfg.get('group') == 'dual_branch':
+        raise ValueError('dual_branch requires schema v4 and explicit branch settings')
 
     def structure(value, reference, path="root"):
         if isinstance(reference, dict):
@@ -68,11 +77,13 @@ def validate(cfg):
         elif not isinstance(value, str) or not value.strip():
             raise ValueError(f"{path} must be nonempty text")
 
-    structure(cfg, DEFAULT)
+    structure(cfg, reference)
     if cfg["group"] not in GROUPS:
         raise ValueError("Unsupported schema/group")
     if cfg["speed_pattern"]["enabled"] != GROUPS[cfg["group"]]:
         raise ValueError("Group does not match the speed-pattern switch")
+    if cfg['schema_version'] == 4 and cfg['dual_branch']['path_weight'] >= 1:
+        raise ValueError('path_weight must be in (0, 1)')
     if Path(cfg["dataset"]).name != cfg["dataset"] or cfg["dataset"] in {".", ".."}:
         raise ValueError("dataset must be a directory name")
     model, speed = cfg["model"], cfg["speed_pattern"]

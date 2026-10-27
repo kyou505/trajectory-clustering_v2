@@ -6,9 +6,10 @@ import torch
 
 from src.data.data_loader import create_data_loaders
 from src.data.speed_pattern import batch_views
-from src.models.pretrain_model import MSTMLoss, SPPretrainModel
+from src.models.pretrain_model import MSTMLoss
 from src.models.speed_pattern_loss import speed_pattern_loss
 from src.training.common import (
+    build_pretrain_model,
     json_write,
     masked_correct_and_total,
     model_kwargs,
@@ -116,7 +117,8 @@ def pretrain(cfg, run, dataset, device):
     )
 
     kwargs = model_kwargs(cfg, dataset)
-    model = SPPretrainModel(**kwargs).to(device)
+    model = build_pretrain_model(cfg, dataset).to(device)
+    print("pretrain model:", type(model).__name__, "parameters:", sum(p.numel() for p in model.parameters()), flush=True)
     criterion = MSTMLoss(time_loss_weight=cfg["time_loss_weight"])
     optimizer = torch.optim.AdamW(
         model.parameters(),

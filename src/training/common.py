@@ -51,9 +51,27 @@ def model_kwargs(cfg, dataset, clustering=False):
     kwargs.update(location_vocab_size=dataset.location_vocab_size,
                   time_vocab_size=dataset.time_vocab_size,
                   max_length=dataset.max_length)
+    if cfg["group"] == "dual_branch":
+        kwargs.update({key: cfg["dual_branch"][key] for key in ("path_weight", "distance_scale")})
     if clustering:
         kwargs["num_clusters"] = cfg["cluster"]["num_clusters"]
     return kwargs
+
+
+def build_pretrain_model(cfg, dataset):
+    if cfg["group"] == "dual_branch":
+        from src.models.dual_branch import DualBranchPretrainModel
+        return DualBranchPretrainModel(**model_kwargs(cfg, dataset))
+    from src.models.pretrain_model import SPPretrainModel
+    return SPPretrainModel(**model_kwargs(cfg, dataset))
+
+
+def build_trajectory_model(cfg, dataset):
+    if cfg["group"] == "dual_branch":
+        from src.models.dual_branch import DualBranchTrajectoryModel
+        return DualBranchTrajectoryModel(**model_kwargs(cfg, dataset, clustering=True))
+    from src.models.contrastive_model import SPTrajectoryModel
+    return SPTrajectoryModel(**model_kwargs(cfg, dataset, clustering=True))
 
 
 def masked_correct_and_total(logits, targets):

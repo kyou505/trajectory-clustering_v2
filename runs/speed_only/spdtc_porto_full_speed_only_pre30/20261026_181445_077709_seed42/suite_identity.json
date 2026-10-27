@@ -1,0 +1,96 @@
+{
+  "common_config": {
+    "schema_version": 3,
+    "dataset": "portoLocalTempo4Full_v1",
+    "data_root": "data",
+    "seed": 42,
+    "model": {
+      "d_model": 256,
+      "num_heads": 2,
+      "num_layers": 2,
+      "dim_feedforward": 1024,
+      "dropout": 0.1
+    },
+    "pretrain": {
+      "epochs": 30,
+      "batch_size": 32,
+      "learning_rate": 0.00015
+    },
+    "cluster": {
+      "epochs": 6,
+      "batch_size": 32,
+      "initialization_batch_size": 256,
+      "num_clusters": 36,
+      "representation_learning_rate": 5e-05,
+      "clustering_learning_rate": 0.00015,
+      "loss_weight": 0.5
+    },
+    "time_loss_weight": 0.1,
+    "weight_decay": 0.01,
+    "speed_pattern": {
+      "warp_axis": "sample_index",
+      "weight": 1.0,
+      "margin": 0.2,
+      "positive_dropout": 0.1,
+      "amplitude": [
+        0.7,
+        1.3
+      ],
+      "width": [
+        0.12,
+        0.28
+      ],
+      "center": [
+        0.2,
+        0.8
+      ],
+      "minimum_rms_fraction": 0.035,
+      "attempts": 16
+    }
+  },
+  "dataset_checksums": {
+    "base_paths.json": "57a180dc3fd64ca9b4e1a9383e1ac8aef1b03e214844429a57e5a16f17b15e10",
+    "checksums.json": "e353f703138dd94fcc649b2f4d45fec11becc8b8b06626004bd123ca54aaaa35",
+    "data_k3.h5": "948e9d32e2e7f92bf2fb806a82964d36529d023d58140db21f232991ca3dd9ab",
+    "generation_config.json": "0919ed0ab1e5807a73b60a44c64cc922e46b1acb52646406ea428146bfd6aa8a",
+    "location_vocab.json": "3f431d8014e362ad999027eae8e8722e5dc6f33589b722ab08482ea03e6cc90d",
+    "quality_report.json": "7f584f03efa8c8a7308ed74917fc96c3ee3843aa58a89adaf19320a3ae87081b",
+    "trj_length.csv": "75485da4dc3afb831b31cab2c4f6e27a2248a1eb0b2732814b63ce7394ea642e"
+  },
+  "source_checksums": {
+    "configs/ablation/spdtc_porto_full_speed_only_pre30.yaml": "8614c5335cb11e2fcc927628e834b2e6bfc4dab051c7e7aeae0cdd1b0aa8f89f",
+    "configs/architecture/spdtc_porto_full_dual_branch_pre30.yaml": "2518442a890b9ae70a57ca1f0fc1a7324f2b33d278d8dbe5facf0198003d7b3f",
+    "configs/baseline/condtc_porto_full_baseline_pre30.yaml": "fcff55522980926bee2a38cfef2c1dc62bd98fef484c051f197ca717a1b1427e",
+    "requirements.txt": "0b1c15e7fbfacf531f6becb460f6223e72a52903fefc673a1ed94c3e8bfdce88",
+    "src/__init__.py": "1e25d3023b52ee015425dd12d6e503b7c6637c2a13ec57200e6544467e21458b",
+    "src/data/__init__.py": "1e25d3023b52ee015425dd12d6e503b7c6637c2a13ec57200e6544467e21458b",
+    "src/data/augmentation.py": "d3d588a84fd0ef9684771455b3c55d7e5632d05d67b65949c04a390b1745f3a6",
+    "src/data/data_loader.py": "b833f3380a4197462d5b7a7553cdf3409d1ad9bfb611e3c4bbfb24ed5b5141c6",
+    "src/data/data_process.py": "60b91d95d3caf69d36210d54b49f1e7fd3fda8d6491702f6b5a46e64fb5c4b49",
+    "src/data/generation/__init__.py": "d50b0561e73364c7099664ffa678ce2b89442f079dc8fd3fbf319f67be93357b",
+    "src/data/generation/build_fullscale.py": "65964b09b81cbce9787bad6965b4e6681a402d5f23befb2fcec2f7c11a9210a6",
+    "src/data/generation/build_small.py": "b6cb05109e3224736afa39d60fdc63f8407519ed77fb51654ea96b026f245e58",
+    "src/data/generation/encoding.py": "eac4247b4c318f10abc5361737a1bf75e8ca80d99869d27ec7a78cf1b037ff3f",
+    "src/data/mstm.py": "9043aea40ba92c3a163412a1471e6c5b91e006b1b8a4ae8bfaa51911e7b16249",
+    "src/data/speed_pattern.py": "dd8a85c9629b177bc14b6e3735f93b446cfa0068fe1d8bbfb7a9ad3f8b8699ca",
+    "src/experiment/__init__.py": "1e25d3023b52ee015425dd12d6e503b7c6637c2a13ec57200e6544467e21458b",
+    "src/experiment/experiment_config.py": "9989ebec2350c51c417d7fecd181e28c1a78afdeeb191c15b3ec4a0d5e082cd6",
+    "src/experiment/run.py": "9b39a6fdfc696ef7e52780930aec47c00d7637520368dade1b8736efc344c478",
+    "src/models/__init__.py": "1e25d3023b52ee015425dd12d6e503b7c6637c2a13ec57200e6544467e21458b",
+    "src/models/contrastive_model.py": "7a1fe36dbe687d4663f3904069dc35f70b46d0b3355c54d28d418eb4a1b53ac3",
+    "src/models/dec.py": "08d1b0eadf33b3a4da0c3794e03d93ce1d5aec3f94effd73a477cff129768964",
+    "src/models/dual_branch.py": "a8ca5c4aeaf9c0da2c88631f58d357bad6ddf32d08ef6f9365193bd476fc31d7",
+    "src/models/embedding.py": "67a7899afd352239468766a5380702fe7bec37dec2a4c435be66850c3beae274",
+    "src/models/encoder.py": "13b9212de92baaa1846bcdcc82762f18ebb849ec913ab613bd4c1ea7826eed08",
+    "src/models/pretrain_model.py": "4f3b890abda9ab61f7e68802db9d7b609692f0350d63ce3a5c648c02b6088a50",
+    "src/models/spdtc_loss.py": "926d7aa9f3080da3051ad1a68a866fc50dcadc429395e2ba5d45de960b322452",
+    "src/models/speed_pattern_loss.py": "b545891f7149f59e8b021fcd833328215ced9871bdc0f1d4a683dfb5002e4087",
+    "src/models/trajectory_encoding.py": "02141f5c56a521499e43219b140f996c4c7c76839967763b9e7cb30fb3a08588",
+    "src/training/__init__.py": "1e25d3023b52ee015425dd12d6e503b7c6637c2a13ec57200e6544467e21458b",
+    "src/training/cluster_init.py": "998a56581ef4c9b1b2d0973fc6550edd31f0282166084e3bc56adbb0b9f609b6",
+    "src/training/common.py": "d3f897726fbe217dc960a385888a89da40f80fbf01bd94ed03b437784c8e1f51",
+    "src/training/dual_branch_diagnostics.py": "f535c7285b45eaf9298bc43d19a063de2725ba8c8abe5affd57bbf44d3cd5b39",
+    "src/training/train_pretrain.py": "ceeb072d19397ce56820d49b6d11e2ad3f46d966ddb10212d1d9985b19ec81e5",
+    "src/training/train_spdtc.py": "5940e7bbcd91340e5466bf3879134c7de60d4d4a710a38692b123795af7da492"
+  }
+}

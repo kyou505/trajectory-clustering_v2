@@ -1,19 +1,22 @@
 # SP-DTC：速度模式感知深度轨迹聚类
 
-当前只保留 ConDTC 基线和速率三元组两组。输入为位置 token、分钟时间 token 和序列位置编码，两组共享编码器与聚类结构。
+保留 ConDTC 基线和速率三元组两组，并新增独立路径/节奏双分支实验。输入仍为位置 token、分钟时间 token 和序列位置编码，现有数据不变。
 
 | 组别 | 预训练 | 联合优化 |
 |---|---|---|
 | `baseline` | MSTM | MSTM + 双视图 DEC |
 | `tempo_only` | MSTM + 速率三元组 | MSTM + 双视图 DEC + 速率三元组 |
+| `dual_branch` | 路径分支预测位置；节奏分支预测时间并学习速率三元组 | 两分支加权距离上的双视图 DEC + 原预训练任务 |
+
+双分支有独立编码参数，速率梯度只进入节奏分支，联合 DEC 更新两支。设计、参数含义与诊断输出见 [双分支说明](configs/architecture/README.md)。此组是待验证的候选结构，不代表已经改善聚类质量。
 
 ## 代码结构
 
 ```text
 SP-DTC/
-├── configs/                # baseline / ablation，各一份配置
+├── configs/                # baseline / ablation / architecture
 ├── data/                   # 已生成的数据
-├── runs/                   # baseline / speed_only，两组实验结果
+├── runs/                   # baseline / speed_only / dual_branch
 └── src/
     ├── data/
     │   ├── data_process.py # token、掩码与样本索引
@@ -40,7 +43,7 @@ L_joint = L_location + 0.1 L_time + 0.5 L_cross_KL + λ_speed L_speed
 L_cross_KL = 0.5 [KL(P2 || Q1) + KL(P1 || Q2)]
 ```
 
-`z̄` 是 L2 归一化的池化表示，DEC 使用未归一化的 `z`。基线的 λ 为 0，速率组为 1，margin 为 0.2。辅助编码关闭 dropout，同时保留梯度。基线继承的实例/簇投影头保持参数和初始化顺序以兼容旧检查点，当前目标函数不使用其输出。
+单分支中，`z̄` 是 L2 归一化的池化表示，DEC 使用未归一化的 `z`。基线的 λ 为 0，速率组为 1，margin 为 0.2。双分支中三元组作用于节奏分支的池化表示，DEC 使用分别归一化、加权且缩放后的两支拼接向量。辅助编码关闭 dropout，同时保留梯度。基线继承的实例/簇投影头保持参数和初始化顺序以兼容旧检查点，当前目标函数不使用其输出。
 
 ## 数据与服务器运行
 
@@ -59,15 +62,18 @@ python -m src.experiment.run --preset full
 # 单独运行一组。
 python -m src.experiment.run --preset full --groups baseline
 python -m src.experiment.run --preset full --groups tempo_only
+
+# 新双分支独立运行；默认入口仍只运行原有两组。
+python -m src.experiment.run --preset full --groups dual_branch
 ```
 
 默认要求 CUDA。相对 `data_root` 从 SP-DTC 根目录解析，服务器可通过 `--data-root` 指定数据位置。配置说明见 [configs/README.md](configs/README.md)。
 
 入口直接加载数据，数据加载器负责 token、长度与词表的基本检查。运行记录保存实际使用的代码和数据哈希，用于识别版本及补跑同一套件。
 
-结果按 `runs/<baseline 或 speed_only>/<实验配置名>/<时间>_seed<种子>/` 存放，同一批次的两组使用相同时间标识。`speed_only` 对应内部组名 `tempo_only`。输出包括预训练日志、检查点、联合训练日志和最终 `metrics.json`（UACC/NMI/RI/ARI）。训练完成后，在原始轨迹上评估一次最终分配；标签只用于评估。
+结果按 `runs/<baseline、speed_only 或 dual_branch>/<实验配置名>/<时间>_seed<种子>/` 存放，同一批次的原有两组使用相同时间标识，双分支单独建立运行。`speed_only` 对应内部组名 `tempo_only`。输出包括预训练日志、检查点、联合训练日志和最终 `metrics.json`（UACC/NMI/RI/ARI）。训练完成后，在原始轨迹上评估一次最终分配；标签只用于评估。
 
-当前训练配置为 schema v3，明确记录按采样点序号扰动。结果目录只保留 full/pre30 下的两组旧版结果，其中速率组按几何沿程进度扰动，与当前增强规则不同；它们保留原始配置，不作为当前版本的新实验结果。当前两组从头预训练，无需外部预训练输入。
+单分支训练配置为 schema v3，双分支为 schema v4；两者都明确记录按采样点序号扰动。结果目录保留 full/pre30 下的两组旧版结果，其中速率组按几何沿程进度扰动，与当前增强规则不同；它们保留原始配置，不作为当前版本的新实验结果。三组都从头预训练，无需外部教师或预训练输入。
 
 Git 只收录配置、最终指标、主训练日志和少量来源记录；权重、逐轮快照及诊断明细保留在本地。目录和提交范围见 [runs/README.md](runs/README.md)。
 

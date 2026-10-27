@@ -1,4 +1,4 @@
-"""直接约束用于聚类的池化表示，不增加独立对比投影头。"""
+"""约束池化表示；单分支使用原 z，双分支只使用节奏 z，不增加投影头。"""
 
 from contextlib import contextmanager
 
@@ -55,7 +55,7 @@ def speed_pattern_loss(model, views, margin, device):
     # 在关闭 dropout 的稳定模式下编码三个视图
     with stable_auxiliary_forward(model):
         vectors = [
-            model.encode({key: value.to(device) for key, value in views[name].items()})
+            model.encode_speed({key: value.to(device) for key, value in views[name].items()})
             for name in ("anchor", "positive", "negative")
         ]
 

@@ -8,15 +8,16 @@ from torch.utils.data import DataLoader
 
 from src.data.data_loader import create_contrastive_data_loader
 from src.data.speed_pattern import batch_views
-from src.models.contrastive_model import SPTrajectoryModel
 from src.models.spdtc_loss import SPDTCLoss
 from src.models.speed_pattern_loss import speed_pattern_loss
+from src.training.dual_branch_diagnostics import assignment_summary, save_dual_representations
 from src.training.cluster_init import (
     compute_global_cross_view_targets,
     extract_trajectory_embeddings,
     initialize_cluster_centers,
 )
 from src.training.common import (
+    build_trajectory_model,
     clustering_metrics,
     create_optimizer,
     json_write,
@@ -52,7 +53,7 @@ def train_spdtc(cfg, run, dataset, device, pretrained):
 
     # 构建模型并加载预训练的编码器与 MSTM 头
     kwargs = model_kwargs(cfg, dataset, clustering=True)
-    model = SPTrajectoryModel(**kwargs).to(device)
+    model = build_trajectory_model(cfg, dataset).to(device)
     info = model.load_pretrained_components(pretrained, map_location=device)
     # 预训练与聚类阶段的速度模式开关必须一致，避免混用不同设置的检查点
     if info["configs"]["speed_pattern"]["enabled"] != speed_cfg["enabled"]:
@@ -73,6 +74,10 @@ def train_spdtc(cfg, run, dataset, device, pretrained):
     initialize_cluster_centers(
         model, embeddings, num_clusters=c["num_clusters"], seed=cfg["seed"], n_init=20
     )
+    save_branches = cfg.get("dual_branch", {}).get("save_representations", False)
+    if save_branches:
+        save_dual_representations(model, original_loader, device, folder / "representations", 0, cfg)
+    del embeddings
 
     optimizer = create_optimizer(
         model,
@@ -152,6 +157,9 @@ def train_spdtc(cfg, run, dataset, device, pretrained):
             batches=len(train_loader),
             elapsed_seconds=time.monotonic() - started,
         )
+        if cfg["group"] == "dual_branch":
+            # 此项来自轮初、更新前的全量分配，明确与训练损失区分。
+            metrics["epoch_start_assignments_view1"] = assignment_summary(targets["q1"])
         history.append({"epoch": epoch, "train": metrics})
         json_write(folder / "training_history.json", history)
 
@@ -175,13 +183,19 @@ def train_spdtc(cfg, run, dataset, device, pretrained):
     # 训练结束后只评估一次最终分配；真实标签只在这里用于计算指标。
     model.eval()
     labels, predictions = [], []
-    with torch.no_grad():
-        for raw in original_loader:
-            view = {key: raw[key].to(device) for key in
-                    ('location_ids', 'time_ids', 'attention_mask', 'pooling_mask')}
-            q = model.clustering_layer(model.encode(view))
-            labels.append(raw['label'].cpu())
-            predictions.append(q.argmax(1).cpu())
+    if save_branches:
+        snapshot = save_dual_representations(model, original_loader, device,
+                                            folder / "representations", c["epochs"], cfg)
+        labels.append(snapshot["labels"])
+        predictions.append(snapshot["q"].argmax(1))
+    else:
+        with torch.no_grad():
+            for raw in original_loader:
+                view = {key: raw[key].to(device) for key in
+                        ('location_ids', 'time_ids', 'attention_mask', 'pooling_mask')}
+                q = model.clustering_layer(model.encode(view))
+                labels.append(raw['label'].cpu())
+                predictions.append(q.argmax(1).cpu())
     json_write(
         run / "metrics.json",
         clustering_metrics(torch.cat(labels).numpy(), torch.cat(predictions).numpy()),

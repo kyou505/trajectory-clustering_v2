@@ -1,0 +1,6 @@
+{
+  "status": "complete",
+  "elapsed_seconds": 2283.380004307255,
+  "selected_checkpoint": "cluster/checkpoints/spdtc_last.pt",
+  "peak_cuda_allocated_bytes": 804498944
+}

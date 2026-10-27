@@ -10,6 +10,10 @@ class TrajectoryEncodingMixin:
         h = self.hidden(view['location_ids'], view['time_ids'], view['attention_mask'])
         return mask_mean_pooling(h, view['pooling_mask'])
 
+    def encode_speed(self, view):
+        # 单分支保持原行为；双分支模型将此接口路由到节奏分支。
+        return self.encode(view)
+
     def mstm(self, batch):
         h = self.hidden(batch['masked_location_ids'], batch['masked_time_ids'], batch['attention_mask'])
         h = self.prediction_transform(h)
