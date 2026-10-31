@@ -1,4 +1,4 @@
-"""联合训练：每轮全局目标更新后，以 MSTM、跨视图 KL、可选速度模式对比更新模型。"""
+"""联合训练：MSTM、单视图 DEC / 跨视图 KL、可选速度模式对比。"""
 
 import json
 import time
@@ -6,13 +6,14 @@ import time
 import torch
 from torch.utils.data import DataLoader
 
-from src.data.data_loader import create_contrastive_data_loader
+from src.data.data_loader import create_contrastive_data_loader, create_single_view_data_loader
 from src.data.speed_pattern import batch_views
 from src.models.spdtc_loss import SPDTCLoss
 from src.models.speed_pattern_loss import speed_pattern_loss
 from src.training.dual_branch_diagnostics import assignment_summary, save_dual_representations
 from src.training.cluster_init import (
     compute_global_cross_view_targets,
+    compute_global_single_view_targets,
     extract_trajectory_embeddings,
     initialize_cluster_centers,
 )
@@ -28,11 +29,16 @@ from src.training.common import (
 
 
 def cluster_terms(model, batch, criterion, targets):
-    """计算单个 batch 的聚类阶段损失（MSTM + 跨视图 KL）。"""
+    """计算 MSTM 与配置指定的聚类损失；目标来自轮初的全量数据。"""
     # 全局目标按稳定样本 ID 索引，不能按当前 batch 顺序或类别编号索引。
     idx = batch["index"].long().cpu()
     device = batch["location_ids"].device
     mstm = model.mstm(batch)
+    if criterion.view_mode == 'single':
+        view = {key: batch[key] for key in
+                ('location_ids', 'time_ids', 'attention_mask', 'pooling_mask')}
+        q = model.clustering_layer(model.encode(view))
+        return criterion(mstm, batch, {'q': q}, targets['p'][idx].to(device))
     output = model(batch["view1"], batch["view2"])
     return criterion(
         mstm,
@@ -49,6 +55,7 @@ def train_spdtc(cfg, run, dataset, device, pretrained):
     if device.type == "cuda":
         torch.cuda.manual_seed_all(cfg["seed"])
     c = cfg["cluster"]
+    view_mode = c.get('view_mode', 'dual')
     speed_cfg = cfg["speed_pattern"]
 
     # 构建模型并加载预训练的编码器与 MSTM 头
@@ -88,13 +95,16 @@ def train_spdtc(cfg, run, dataset, device, pretrained):
     criterion = SPDTCLoss(
         time_loss_weight=cfg["time_loss_weight"],
         clustering_loss_weight=c["loss_weight"],
+        view_mode=view_mode,
     )
 
-    # 训练用 loader 打乱顺序；目标计算用 loader 复用同一数据集但不打乱
-    train_loader = create_contrastive_data_loader(
+    # 单视图的目标直接读取原始数据，不额外生成 MSTM 遮盖或增强视图。
+    loader_factory = (create_single_view_data_loader if view_mode == 'single'
+                      else create_contrastive_data_loader)
+    train_loader = loader_factory(
         batch_size=c["batch_size"], seed=cfg["seed"], base_dataset=dataset
     )
-    target_loader = DataLoader(
+    target_loader = original_loader if view_mode == 'single' else DataLoader(
         train_loader.dataset,
         batch_size=c["initialization_batch_size"],
         shuffle=False,
@@ -104,9 +114,11 @@ def train_spdtc(cfg, run, dataset, device, pretrained):
     best, history = float("inf"), []
     for epoch in range(1, c["epochs"] + 1):
         started = time.monotonic()
-        # 先切换 epoch 使增强视图更新，再用当前模型在全量数据上计算本轮固定的目标分布
-        train_loader.dataset.set_epoch(epoch)
-        targets = compute_global_cross_view_targets(model, target_loader, device, len(dataset))
+        if view_mode == 'single':
+            targets = compute_global_single_view_targets(model, target_loader, device, len(dataset))
+        else:
+            train_loader.dataset.set_epoch(epoch)
+            targets = compute_global_cross_view_targets(model, target_loader, device, len(dataset))
 
         sums, samples = {}, 0
         for batch_i, raw in enumerate(train_loader, start=1):
@@ -119,7 +131,7 @@ def train_spdtc(cfg, run, dataset, device, pretrained):
             model.train()
             optimizer.zero_grad(set_to_none=True)
 
-            # 主损失：MSTM + 跨视图 KL
+            # 主损失：MSTM + 单视图 DEC 或跨视图 KL
             terms = cluster_terms(model, batch, criterion, targets)
             # 可选：速度模式三元组损失
             extra = (
@@ -156,10 +168,14 @@ def train_spdtc(cfg, run, dataset, device, pretrained):
             samples=samples,
             batches=len(train_loader),
             elapsed_seconds=time.monotonic() - started,
+            view_mode=view_mode,
         )
         if cfg["group"] == "dual_branch":
             # 此项来自轮初、更新前的全量分配，明确与训练损失区分。
-            metrics["epoch_start_assignments_view1"] = assignment_summary(targets["q1"])
+            if view_mode == 'single':
+                metrics['epoch_start_assignments_original'] = assignment_summary(targets['q'])
+            else:
+                metrics['epoch_start_assignments_view1'] = assignment_summary(targets['q1'])
         history.append({"epoch": epoch, "train": metrics})
         json_write(folder / "training_history.json", history)
 

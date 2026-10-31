@@ -9,7 +9,7 @@ ROOT = Path(__file__).resolve().parents[2]
 # tempo_only 沿用旧实验组名，模块与配置字段统一使用 speed_pattern。
 GROUPS = {"baseline": False, "tempo_only": True, "dual_branch": True}
 DEFAULT_GROUPS = ("baseline", "tempo_only")
-# 每个方法只维护一份完整配置；文件名说明方法、数据规模和预训练预算。
+# 各方法的默认完整配置；额外消融通过 --config 显式指定。
 # group 保持历史标识，以兼容已有检查点和离线结果。
 CONFIG_FILES = {
     "baseline": "configs/baseline/condtc_porto_full_baseline_pre30.yaml",
@@ -42,6 +42,9 @@ def validate(cfg):
     if not isinstance(cfg, dict) or type(cfg.get('schema_version')) is not int or cfg['schema_version'] not in (3, 4):
         raise ValueError('Training requires schema v3 (single branch) or v4 (dual branch), with sample_index warping')
     reference = deepcopy(DEFAULT)
+    # 可选字段：旧配置缺省为 dual，不改写旧配置与检查点的内容。
+    if isinstance(cfg.get('cluster'), dict) and 'view_mode' in cfg['cluster']:
+        reference['cluster']['view_mode'] = 'dual'
     if cfg['schema_version'] == 4:
         reference['dual_branch'] = {'path_weight': 0.5, 'distance_scale': 100.0,
                                     'save_representations': True}
@@ -78,6 +81,8 @@ def validate(cfg):
             raise ValueError(f"{path} must be nonempty text")
 
     structure(cfg, reference)
+    if cfg['cluster'].get('view_mode', 'dual') not in {'dual', 'single'}:
+        raise ValueError('cluster.view_mode must be dual or single')
     if cfg["group"] not in GROUPS:
         raise ValueError("Unsupported schema/group")
     if cfg["speed_pattern"]["enabled"] != GROUPS[cfg["group"]]:

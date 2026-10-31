@@ -1,4 +1,4 @@
-"""全量原始表示初始化中心；每轮开始在全量双视图上计算冻结的锐化目标。"""
+"""全量原始表示初始化中心；每轮按配置计算原始或双视图的冻结锐化目标。"""
 import torch
 from sklearn.cluster import KMeans
 
@@ -62,6 +62,32 @@ def initialize_cluster_centers(
     # 不能重新赋值
     model.clustering_layer.cluster_centers.copy_(centers)
     return kmeans
+
+@torch.no_grad()
+def compute_global_single_view_targets(model, loader, device, num_samples):
+    """按样本 ID 汇集原始轨迹 Q，再以全量簇频率计算本轮固定的 P。"""
+    model.eval()
+    global_q = None
+    seen = torch.zeros(num_samples, dtype=torch.bool)
+    for batch in loader:
+        indices = batch['index'].long().cpu()
+        if indices.min().item() < 0 or indices.max().item() >= num_samples:
+            raise ValueError('indices should be in [0, num_samples)')
+        if indices.unique().numel() != indices.numel() or seen[indices].any():
+            raise RuntimeError('indices should be unique')
+        view = {key: batch[key].to(device) for key in
+                ('location_ids', 'time_ids', 'attention_mask', 'pooling_mask')}
+        q = model.clustering_layer(model.encode(view)).cpu()
+        if global_q is None:
+            global_q = torch.empty(num_samples, q.size(1), dtype=q.dtype)
+        global_q[indices] = q
+        seen[indices] = True
+    if global_q is None:
+        raise RuntimeError('no batches were processed')
+    if not seen.all():
+        raise RuntimeError(f'Missing {(~seen).sum().item()} samples')
+    return {'q': global_q, 'p': target_distribution(global_q)}
+
 
 @torch.no_grad()
 def compute_global_cross_view_targets(

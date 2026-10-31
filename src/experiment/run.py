@@ -101,7 +101,10 @@ def run_directory(cfg, group, run_id):
         ),
         cfg["dataset"],
     )
-    name = f"{method}_{dataset}_{category}_pre{cfg['pretrain']['epochs']}"
+    variant = category
+    if cfg['cluster'].get('view_mode', 'dual') == 'single':
+        variant += '_single_view'
+    name = f"{method}_{dataset}_{variant}_pre{cfg['pretrain']['epochs']}"
     return ROOT / "runs" / category / name / run_id
 
 

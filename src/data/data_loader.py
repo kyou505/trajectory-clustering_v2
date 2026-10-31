@@ -62,6 +62,17 @@ def create_data_loaders(
     return train_loader, valid_loader, test_loader
 
 
+def create_single_view_data_loader(batch_size=32, seed=0, mask_ratio=0.15,
+                                   shuffle=True, base_dataset=None):
+    """全量原始轨迹用于 DEC；仅附加 MSTM 字段，不生成聚类增强视图。"""
+    if base_dataset is None:
+        base_dataset = TrajectoryDataset()
+    dataset = MSTMDataset(base_dataset, mask_ratio=mask_ratio,
+                          deterministic=False, seed=seed)
+    return DataLoader(dataset, batch_size=batch_size, shuffle=shuffle, num_workers=0,
+                      generator=torch.Generator().manual_seed(seed))
+
+
 def create_contrastive_data_loader(
     batch_size=32,
     seed=0,

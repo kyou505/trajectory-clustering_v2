@@ -7,8 +7,11 @@
 | `baseline/condtc_porto_full_baseline_pre30.yaml` | ConDTC 基线 | `baseline` |
 | `ablation/spdtc_porto_full_speed_only_pre30.yaml` | 基线 + 速率三元组 | `tempo_only` |
 | `architecture/spdtc_porto_full_dual_branch_pre30.yaml` | 独立路径/节奏分支 + 联合距离 | `dual_branch` |
+| `ablation/spdtc_porto_full_dual_branch_single_view_pre30.yaml` | 双分支移除聚类双视图增强，改用原始单视图 DEC | `dual_branch` |
 
 原有两组共享编码器、MSTM 和双视图 DEC，只改变 `speed_pattern.enabled`。速率组的三元组同时用于预训练和联合优化，权重为 1、margin 为 0.2。双分支沿用这些任务权重、数据与预算，改变编码结构、任务路由和聚类距离；详见 [双分支说明](architecture/README.md)。
+
+单视图消融只增加 `cluster.view_mode: single`，其余设置与双分支默认配置一致。缺省或 `dual` 仍使用原双视图训练。运行方法和对照范围见 [单视图消融说明](ablation/single_view.md)。
 
 ## 配置与规模
 

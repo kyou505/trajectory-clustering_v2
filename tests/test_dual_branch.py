@@ -5,20 +5,22 @@ import json
 import pytest
 import torch
 from torch.nn import functional as F
-from torch.utils.data import Dataset, DataLoader
+from torch.utils.data import Dataset, DataLoader, Subset
 
+from src.data.data_loader import create_single_view_data_loader
 from src.data.mstm import MSTMDataset
-from src.experiment.experiment_config import load, validate, DEFAULT_GROUPS
+from src.experiment.experiment_config import load, load_config, validate, DEFAULT_GROUPS, ROOT
 from src.experiment.run import run_directory
 from src.models.dual_branch import DualBranchPretrainModel, DualBranchTrajectoryModel
 from src.models.pretrain_model import MSTMLoss, SPPretrainModel
 from src.models.contrastive_model import SPTrajectoryModel
 from src.models.dec import target_distribution
+from src.models.spdtc_loss import SPDTCLoss
 from src.models.speed_pattern_loss import speed_pattern_loss
-from src.training.cluster_init import initialize_cluster_centers
+from src.training.cluster_init import initialize_cluster_centers, compute_global_single_view_targets
 from src.training.common import build_pretrain_model, build_trajectory_model, model_kwargs
 from src.training.train_pretrain import pretrain
-from src.training.train_spdtc import train_spdtc
+from src.training.train_spdtc import train_spdtc, cluster_terms
 
 
 class TinyTrajectories(Dataset):
@@ -197,12 +199,25 @@ def test_configs_and_baseline_factory_preserve_original_initialization(cfg):
             torch.testing.assert_close(built.encode(view_batch()), built.encode_speed(view_batch()), rtol=0, atol=0)
 
 
-def test_full_pretrain_cluster_pipeline_on_tiny_data(cfg, tmp_path):
+@pytest.mark.parametrize('view_mode', ['dual', 'single'])
+def test_full_pretrain_cluster_pipeline_on_tiny_data(cfg, tmp_path, monkeypatch, view_mode):
+    if view_mode == 'single':
+        cfg['cluster']['view_mode'] = view_mode
+        validate(cfg)
+        def reject_augmentation(*args, **kwargs):
+            raise AssertionError('Single-view training must not construct dual-view augmentation')
+        monkeypatch.setattr('src.training.train_spdtc.create_contrastive_data_loader', reject_augmentation)
     dataset = TinyTrajectories()
     pretrained = pretrain(cfg, tmp_path, dataset, torch.device("cpu"))
     checkpoint = train_spdtc(cfg, tmp_path, dataset, torch.device("cpu"), pretrained)
     state = torch.load(checkpoint, weights_only=True)
     assert state["epoch"] == 1
+    assert state['train_metrics']['view_mode'] == view_mode
+    assignment_key = ('epoch_start_assignments_original' if view_mode == 'single'
+                      else 'epoch_start_assignments_view1')
+    assert assignment_key in state['train_metrics']
+    assert 'speed_pattern_loss' in state['train_metrics']
+    assert ('clustering_loss_view1' in state['train_metrics']) == (view_mode == 'dual')
     assert state["model_state_dict"]["clustering_layer.cluster_centers"].shape == (4, 32)
     initial = torch.load(tmp_path / "cluster/representations/epoch_000.pt", weights_only=True)
     final = torch.load(tmp_path / "cluster/representations/epoch_001.pt", weights_only=True)
@@ -217,3 +232,90 @@ def test_full_pretrain_cluster_pipeline_on_tiny_data(cfg, tmp_path):
     metrics = json.loads((tmp_path / "metrics.json").read_text())
     assert all(0 <= metrics[k] <= 1 for k in ("uacc", "nmi", "ri"))
     assert -1 <= metrics["ari"] <= 1
+
+
+def test_single_view_config_only_changes_clustering_view_mode():
+    baseline = load('dual_branch', 'full')
+    single = load_config(ROOT / 'configs/ablation/spdtc_porto_full_dual_branch_single_view_pre30.yaml')
+    assert single['cluster'].pop('view_mode') == 'single'
+    assert single == baseline
+    old_path = run_directory(baseline, 'dual_branch', 'test')
+    single['cluster']['view_mode'] = 'single'
+    assert 'single_view_pre30' in str(run_directory(single, 'dual_branch', 'test'))
+    assert old_path != run_directory(single, 'dual_branch', 'test')
+    single['cluster']['view_mode'] = 'off'
+    with pytest.raises(ValueError, match='view_mode'):
+        validate(single)
+
+
+def test_single_view_loader_preserves_original_inputs():
+    dataset = TinyTrajectories()
+    loader = create_single_view_data_loader(batch_size=8, shuffle=False, base_dataset=dataset)
+    batch = next(iter(loader))
+    assert 'view1' not in batch and 'view2' not in batch
+    assert batch['mstm_mask'].any()
+    for i in range(8):
+        for key in ('location_ids', 'time_ids', 'attention_mask', 'pooling_mask'):
+            torch.testing.assert_close(batch[key][i], dataset[i][key], rtol=0, atol=0)
+
+
+def test_single_view_targets_are_global_frozen_and_indexed(cfg):
+    dataset = TinyTrajectories()
+    model = build_trajectory_model(cfg, dataset).eval()
+    shuffled = DataLoader(dataset, batch_size=5, shuffle=True,
+                          generator=torch.Generator().manual_seed(71))
+    targets = compute_global_single_view_targets(model, shuffled, 'cpu', len(dataset))
+    batch = next(iter(DataLoader(dataset, batch_size=len(dataset))))
+    with torch.no_grad():
+        q = model.clustering_layer(model.encode(batch))
+    torch.testing.assert_close(targets['q'], q)
+    torch.testing.assert_close(targets['p'], target_distribution(q))
+    assert not targets['p'].requires_grad and not targets['q'].requires_grad
+    other = compute_global_single_view_targets(model, DataLoader(dataset, batch_size=7),
+                                               'cpu', len(dataset))
+    torch.testing.assert_close(other['p'], targets['p'])
+
+
+@pytest.mark.parametrize('indices,error,message', [
+    ([0, 0], RuntimeError, 'unique'),
+    ([-1], ValueError, 'indices'),
+    ([24], ValueError, 'indices'),
+    ([0], RuntimeError, 'Missing'),
+    ([], RuntimeError, 'no batches'),
+])
+def test_single_view_targets_reject_incomplete_or_invalid_indices(cfg, indices, error, message):
+    dataset = TinyTrajectories()
+    model = build_trajectory_model(cfg, dataset)
+    loader = DataLoader(Subset(dataset, indices), batch_size=1)
+    with pytest.raises(error, match=message):
+        compute_global_single_view_targets(model, loader, 'cpu', len(dataset))
+
+
+def test_single_view_loss_uses_one_original_encoding_and_stops_target_gradient(cfg, monkeypatch):
+    dataset = TinyTrajectories()
+    model = build_trajectory_model(cfg, dataset).eval()
+    # 非顺序 batch，确保目标仍按全局样本 ID 选取。
+    batch = next(iter(create_single_view_data_loader(batch_size=8, seed=73, base_dataset=dataset)))
+    p = torch.rand(len(dataset), 4)
+    p = (p / p.sum(1, keepdim=True)).requires_grad_()
+    criterion = SPDTCLoss(clustering_loss_weight=0.5, view_mode='single')
+    calls = []
+    encode = model.encode
+    def capture(view):
+        calls.append(view)
+        return encode(view)
+    monkeypatch.setattr(model, 'encode', capture)
+    terms = cluster_terms(model, batch, criterion, {'p': p})
+    assert len(calls) == 1
+    for key, value in calls[0].items():
+        torch.testing.assert_close(value, batch[key], rtol=0, atol=0)
+    with torch.no_grad():
+        q = model.clustering_layer(encode(batch))
+        expected = F.kl_div(q.log(), p[batch['index']], reduction='batchmean')
+    torch.testing.assert_close(terms['clustering_loss'], expected)
+    torch.testing.assert_close(terms['base_loss'], terms['representation_loss'] + 0.5 * expected)
+    terms['clustering_loss'].backward()
+    assert p.grad is None
+    assert nonzero_grad(model.encoder.path)
+    assert nonzero_grad(model.encoder.rhythm)
+    assert nonzero_grad(model.clustering_layer)
