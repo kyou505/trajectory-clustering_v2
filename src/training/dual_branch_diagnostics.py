@@ -58,6 +58,8 @@ def save_dual_representations(model, loader, device, folder, epoch, cfg):
         epoch=epoch,
         configs=cfg,
         representation_kind="unnormalized_branch_pooled",
+        # path/rhythm 是兼容字段；mstm_speed 中第一支并非纯空间表示。
+        branch_roles=dict(model.branch_roles),
         cluster_centers=model.clustering_layer.cluster_centers.detach().cpu(),
     )
 
@@ -66,6 +68,7 @@ def save_dual_representations(model, loader, device, folder, epoch, cfg):
     summary.update(
         samples=len(order),
         epoch=epoch,
+        branch_roles=dict(model.branch_roles),
         path_dimension=state["path"].size(1),
         rhythm_dimension=state["rhythm"].size(1),
         path_mean_norm=float(state["path"].norm(dim=1).mean()),

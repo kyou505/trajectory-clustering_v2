@@ -2,6 +2,8 @@
 
 本组改变表示结构及聚类距离。两条分支同时预训练，不依赖外部 baseline 教师，也不延后开启速率任务。
 
+本页描述缺省 `task_routing: split_masked`。第一支完整 MSTM、第二支速度三元组的独立对照见 [任务分工消融](../ablation/mstm_speed.md)。
+
 | 部分 | 输入 | 参数与任务 |
 |---|---|---|
 | path | 位置 token + 正弦序列编码 | 独立嵌入及 Transformer；预测被遮盖的位置 |

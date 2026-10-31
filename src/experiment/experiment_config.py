@@ -48,6 +48,8 @@ def validate(cfg):
     if cfg['schema_version'] == 4:
         reference['dual_branch'] = {'path_weight': 0.5, 'distance_scale': 100.0,
                                     'save_representations': True}
+        if isinstance(cfg.get('dual_branch'), dict) and 'task_routing' in cfg['dual_branch']:
+            reference['dual_branch']['task_routing'] = 'split_masked'
         if cfg.get('group') != 'dual_branch':
             raise ValueError('Schema v4 is reserved for the dual_branch architecture')
     elif cfg.get('group') == 'dual_branch':
@@ -89,6 +91,8 @@ def validate(cfg):
         raise ValueError("Group does not match the speed-pattern switch")
     if cfg['schema_version'] == 4 and cfg['dual_branch']['path_weight'] >= 1:
         raise ValueError('path_weight must be in (0, 1)')
+    if cfg['schema_version'] == 4 and cfg['dual_branch'].get('task_routing', 'split_masked') not in {'split_masked', 'mstm_speed'}:
+        raise ValueError('dual_branch.task_routing must be split_masked or mstm_speed')
     if Path(cfg["dataset"]).name != cfg["dataset"] or cfg["dataset"] in {".", ".."}:
         raise ValueError("dataset must be a directory name")
     model, speed = cfg["model"], cfg["speed_pattern"]

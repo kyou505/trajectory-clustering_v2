@@ -62,6 +62,13 @@ def cfg():
     return validate(c)
 
 
+@pytest.fixture(params=['split_masked', 'mstm_speed'])
+def routed_cfg(cfg, request):
+    if request.param != 'split_masked':
+        cfg['dual_branch']['task_routing'] = request.param
+    return validate(cfg)
+
+
 def view_batch():
     return next(iter(DataLoader(TinyTrajectories(), batch_size=4)))
 
@@ -88,7 +95,8 @@ def test_path_is_time_invariant_and_parameters_are_independent(cfg):
         torch.testing.assert_close(first[key], after[key])
 
 
-def test_speed_gradient_and_optimizer_step_do_not_modify_path(cfg):
+def test_speed_gradient_and_optimizer_step_do_not_modify_path(routed_cfg):
+    cfg = routed_cfg
     model = build_pretrain_model(cfg, TinyTrajectories()).train()
     anchor = view_batch()
     negative = deepcopy(anchor)
@@ -141,7 +149,8 @@ def test_joint_distance_and_kmeans_use_same_coordinates(cfg):
     assert torch.equal(model.clustering_layer(z).argmax(1), torch.tensor(km.predict(z.detach().numpy())))
 
 
-def test_dec_backpropagates_to_both_branches_and_centers(cfg):
+def test_dec_backpropagates_to_both_branches_and_centers(routed_cfg):
+    cfg = routed_cfg
     model = build_trajectory_model(cfg, TinyTrajectories()).eval()
     q = model.clustering_layer(model.encode(view_batch()))
     p = target_distribution(q)
@@ -151,7 +160,8 @@ def test_dec_backpropagates_to_both_branches_and_centers(cfg):
     assert nonzero_grad(model.clustering_layer)
 
 
-def test_pretraining_checkpoint_roundtrip_and_rejects_mismatch(cfg, tmp_path):
+def test_pretraining_checkpoint_roundtrip_and_rejects_mismatch(routed_cfg, tmp_path):
+    cfg = routed_cfg
     pre = build_pretrain_model(cfg, TinyTrajectories()).eval()
     checkpoint = tmp_path / "pre.pt"
     state = {"experiment_schema": "sp_dtc_pretrain_v1", "configs": cfg,
@@ -167,6 +177,12 @@ def test_pretraining_checkpoint_roundtrip_and_rejects_mismatch(cfg, tmp_path):
     altered = deepcopy(cfg)
     altered["model"]["num_heads"] = 4
     with pytest.raises(ValueError, match="encoder settings"):
+        build_trajectory_model(altered, TinyTrajectories()).load_pretrained_components(checkpoint)
+    altered = deepcopy(cfg)
+    altered['dual_branch']['task_routing'] = (
+        'split_masked' if cfg['dual_branch'].get('task_routing') == 'mstm_speed' else 'mstm_speed'
+    )
+    with pytest.raises(ValueError, match='task_routing'):
         build_trajectory_model(altered, TinyTrajectories()).load_pretrained_components(checkpoint)
     state["configs"] = load("tempo_only", "small")
     torch.save(state, checkpoint)
@@ -200,7 +216,8 @@ def test_configs_and_baseline_factory_preserve_original_initialization(cfg):
 
 
 @pytest.mark.parametrize('view_mode', ['dual', 'single'])
-def test_full_pretrain_cluster_pipeline_on_tiny_data(cfg, tmp_path, monkeypatch, view_mode):
+def test_full_pretrain_cluster_pipeline_on_tiny_data(routed_cfg, tmp_path, monkeypatch, view_mode):
+    cfg = routed_cfg
     if view_mode == 'single':
         cfg['cluster']['view_mode'] = view_mode
         validate(cfg)
@@ -221,6 +238,10 @@ def test_full_pretrain_cluster_pipeline_on_tiny_data(cfg, tmp_path, monkeypatch,
     assert state["model_state_dict"]["clustering_layer.cluster_centers"].shape == (4, 32)
     initial = torch.load(tmp_path / "cluster/representations/epoch_000.pt", weights_only=True)
     final = torch.load(tmp_path / "cluster/representations/epoch_001.pt", weights_only=True)
+    expected_roles = ({'path': 'mstm', 'rhythm': 'speed'}
+                      if cfg['dual_branch'].get('task_routing') == 'mstm_speed'
+                      else {'path': 'path', 'rhythm': 'rhythm'})
+    assert initial['branch_roles'] == final['branch_roles'] == expected_roles
     assert torch.equal(final["sample_ids"], torch.arange(len(dataset)))
     assert not torch.allclose(initial["path"], final["path"])
     assert not torch.allclose(initial["rhythm"], final["rhythm"])
@@ -319,3 +340,60 @@ def test_single_view_loss_uses_one_original_encoding_and_stops_target_gradient(c
     assert nonzero_grad(model.encoder.path)
     assert nonzero_grad(model.encoder.rhythm)
     assert nonzero_grad(model.clustering_layer)
+
+
+def test_mstm_speed_configuration_is_single_view_routing_ablation():
+    control = load_config(ROOT / 'configs/ablation/spdtc_porto_full_dual_branch_single_view_pre30.yaml')
+    candidate = load_config(ROOT / 'configs/ablation/spdtc_porto_full_dual_branch_mstm_speed_single_view_pre30.yaml')
+    assert candidate['dual_branch']['task_routing'] == 'mstm_speed'
+    assert candidate['cluster']['view_mode'] == 'single'
+    assert 'dual_branch_mstm_speed_single_view_pre30' in str(run_directory(candidate, 'dual_branch', 'test'))
+    candidate['dual_branch'].pop('task_routing')
+    assert candidate == control
+    candidate['dual_branch']['task_routing'] = 'typo'
+    with pytest.raises(ValueError, match='task_routing'):
+        validate(candidate)
+
+
+def test_mstm_branch_matches_condtc_masked_predictions(cfg):
+    cfg['dual_branch']['task_routing'] = 'mstm_speed'
+    dataset = TinyTrajectories()
+    model = build_pretrain_model(cfg, dataset).eval()
+    kwargs = model_kwargs(cfg, dataset)
+    for key in ('path_weight', 'distance_scale', 'task_routing'):
+        kwargs.pop(key)
+    reference = SPPretrainModel(**kwargs).eval()
+    reference.encoder.load_state_dict(model.encoder.path.state_dict())
+    reference.prediction_transform.load_state_dict(model.prediction_transform.state_dict())
+    assert model.location_head.weight is model.encoder.path.embedding.location_embedding.weight
+    assert model.time_head.weight is model.encoder.path.embedding.time_embedding.weight
+    assert model.time_head.weight is not model.encoder.rhythm.embedding.time_embedding.weight
+    assert not ({id(p) for p in model.encoder.path.parameters()} &
+                {id(p) for p in model.encoder.rhythm.parameters()})
+    batch = next(iter(DataLoader(MSTMDataset(dataset, deterministic=True), batch_size=4)))
+    actual, expected = model.mstm(batch), reference.mstm(batch)
+    for key in ('location_logits', 'time_logits'):
+        torch.testing.assert_close(actual[key], expected[key], rtol=0, atol=0)
+    torch.testing.assert_close(model.encode_components(batch)['path'], reference.encode(batch), rtol=0, atol=0)
+    changed = deepcopy(batch)
+    changed['time_ids'][changed['pooling_mask']] += 37
+    assert not torch.allclose(model.encode_components(batch)['path'], model.encode_components(changed)['path'])
+
+
+@pytest.mark.parametrize('task', ['location', 'time'])
+def test_complete_mstm_only_runs_and_updates_first_branch(cfg, monkeypatch, task):
+    cfg['dual_branch']['task_routing'] = 'mstm_speed'
+    model = build_pretrain_model(cfg, TinyTrajectories()).eval()
+    def reject_rhythm(*args, **kwargs):
+        raise AssertionError('MSTM must not execute the speed branch')
+    monkeypatch.setattr(model.encoder.rhythm, 'forward', reject_rhythm)
+    batch = next(iter(DataLoader(MSTMDataset(TinyTrajectories(), deterministic=True), batch_size=4)))
+    output = model.mstm(batch)
+    changed = deepcopy(batch)
+    changed['location_ids'].fill_(9)
+    changed['time_ids'].fill_(80)
+    torch.testing.assert_close(output[f'{task}_logits'], model.mstm(changed)[f'{task}_logits'])
+    F.cross_entropy(output[f'{task}_logits'].flatten(0, 1), batch[f'{task}_targets'].flatten()).backward()
+    assert nonzero_grad(model.encoder.path)
+    assert nonzero_grad(model.prediction_transform)
+    assert all(p.grad is None for p in model.encoder.rhythm.parameters())

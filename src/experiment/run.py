@@ -102,6 +102,8 @@ def run_directory(cfg, group, run_id):
         cfg["dataset"],
     )
     variant = category
+    if cfg.get('dual_branch', {}).get('task_routing', 'split_masked') == 'mstm_speed':
+        variant += '_mstm_speed'
     if cfg['cluster'].get('view_mode', 'dual') == 'single':
         variant += '_single_view'
     name = f"{method}_{dataset}_{variant}_pre{cfg['pretrain']['epochs']}"

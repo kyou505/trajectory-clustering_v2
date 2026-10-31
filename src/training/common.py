@@ -53,6 +53,9 @@ def model_kwargs(cfg, dataset, clustering=False):
                   max_length=dataset.max_length)
     if cfg["group"] == "dual_branch":
         kwargs.update({key: cfg["dual_branch"][key] for key in ("path_weight", "distance_scale")})
+        routing = cfg['dual_branch'].get('task_routing', 'split_masked')
+        if routing != 'split_masked':
+            kwargs['task_routing'] = routing
     if clustering:
         kwargs["num_clusters"] = cfg["cluster"]["num_clusters"]
     return kwargs

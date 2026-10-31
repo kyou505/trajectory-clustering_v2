@@ -1,7 +1,8 @@
-"""独立路径/节奏编码、分支内掩码预测与加权联合距离。
+"""独立双分支编码、可选任务分工与加权联合距离。
 
-路径分支只读位置和序列编码；节奏分支读位置、时间和序列编码。
-两者不共享参数。速度损失只调用 encode_speed，联合 DEC 仍更新两个分支。
+split_masked：位置分支预测位置，时空分支预测时间并学习速度三元组。
+mstm_speed：第一支以 ConDTC 时空编码完成完整 MSTM，第二支学习速度三元组。
+两者均不共享参数。速度损失只调用 encode_speed，联合 DEC 更新两个分支。
 """
 
 import math
@@ -60,7 +61,7 @@ class PathEncoder(nn.Module):
 
 
 class PathRhythmEncoder(nn.Module):
-    """两个互不共享参数的编码器：路径分支 + 节奏分支（位置 + 时间）。"""
+    """两个独立编码器；path/rhythm 保留为第一/第二支的兼容字段名。"""
 
     def __init__(
         self,
@@ -72,17 +73,28 @@ class PathRhythmEncoder(nn.Module):
         num_layers,
         dim_feedforward,
         dropout,
+        task_routing='split_masked',
     ):
         super().__init__()
-        self.path = PathEncoder(
-            location_vocab_size,
-            d_model,
-            max_length,
-            num_heads,
-            num_layers,
-            dim_feedforward,
-            dropout,
-        )
+        if task_routing not in {'split_masked', 'mstm_speed'}:
+            raise ValueError('task_routing must be split_masked or mstm_speed')
+        self.first_uses_time = task_routing == 'mstm_speed'
+        if self.first_uses_time:
+            self.path = TrajectoryEncoder(
+                location_vocab_size=location_vocab_size, time_vocab_size=time_vocab_size,
+                d_model=d_model, max_length=max_length, num_heads=num_heads,
+                num_layers=num_layers, dim_feedforward=dim_feedforward, dropout=dropout,
+            )
+        else:
+            self.path = PathEncoder(
+                location_vocab_size,
+                d_model,
+                max_length,
+                num_heads,
+                num_layers,
+                dim_feedforward,
+                dropout,
+            )
         self.rhythm = TrajectoryEncoder(
             location_vocab_size=location_vocab_size,
             time_vocab_size=time_vocab_size,
@@ -94,16 +106,21 @@ class PathRhythmEncoder(nn.Module):
             dropout=dropout,
         )
 
+    def first_hidden(self, location_ids, time_ids, attention_mask):
+        if self.first_uses_time:
+            return self.path(location_ids, time_ids, attention_mask)
+        return self.path(location_ids, attention_mask)
+
     def forward(self, location_ids, time_ids, attention_mask):
-        """返回 (路径隐状态, 节奏隐状态)，形状均为 B×L×d_model。"""
+        """返回两个分支的隐状态，形状均为 B×L×d_model。"""
         return (
-            self.path(location_ids, attention_mask),
+            self.first_hidden(location_ids, time_ids, attention_mask),
             self.rhythm(location_ids, time_ids, attention_mask),
         )
 
 
 class DualBranchPretrainModel(nn.Module):
-    """双分支预训练模型：路径分支预测被遮盖的位置，节奏分支预测被遮盖的时间。"""
+    """掩码任务按 task_routing 分配；速度三元组始终仅更新第二支。"""
 
     def __init__(
         self,
@@ -117,8 +134,14 @@ class DualBranchPretrainModel(nn.Module):
         dropout=0.1,
         path_weight=0.5,
         distance_scale=100.0,
+        task_routing='split_masked',
     ):
         super().__init__()
+        if task_routing not in {'split_masked', 'mstm_speed'}:
+            raise ValueError('task_routing must be split_masked or mstm_speed')
+        self.task_routing = task_routing
+        self.branch_roles = ({'path': 'mstm', 'rhythm': 'speed'} if task_routing == 'mstm_speed'
+                             else {'path': 'path', 'rhythm': 'rhythm'})
         # path_weight 即联合距离中的 lambda，distance_scale 为整体距离缩放
         if not math.isfinite(path_weight) or not 0 < path_weight < 1:
             raise ValueError("path_weight must be in (0, 1)")
@@ -138,6 +161,9 @@ class DualBranchPretrainModel(nn.Module):
             path_weight=path_weight,
             distance_scale=distance_scale,
         )
+        # 旧模式不增加构造参数键，兼容现有预训练检查点。
+        if task_routing != 'split_masked':
+            self.pretrain_kwargs['task_routing'] = task_routing
         self.encoder = PathRhythmEncoder(
             location_vocab_size,
             time_vocab_size,
@@ -147,24 +173,36 @@ class DualBranchPretrainModel(nn.Module):
             num_layers,
             dim_feedforward,
             dropout,
+            task_routing=task_routing,
         )
 
         # 掩码预测头：先过一层变换，再用与嵌入共享的权重投影到词表
-        self.path_prediction_transform = nn.Sequential(
-            nn.Linear(d_model, d_model), nn.GELU()
-        )
-        self.rhythm_prediction_transform = nn.Sequential(
-            nn.Linear(d_model, d_model), nn.GELU()
-        )
+        if task_routing == 'mstm_speed':
+            # 与 ConDTC 的完整 MSTM 一致：两个预测头共用一层预测变换。
+            self.prediction_transform = nn.Sequential(nn.Linear(d_model, d_model), nn.GELU())
+        else:
+            self.path_prediction_transform = nn.Sequential(
+                nn.Linear(d_model, d_model), nn.GELU()
+            )
+            self.rhythm_prediction_transform = nn.Sequential(
+                nn.Linear(d_model, d_model), nn.GELU()
+            )
         self.location_head = nn.Linear(d_model, location_vocab_size, bias=False)
         self.time_head = nn.Linear(d_model, time_vocab_size, bias=False)
-        # 只在各自分支内部 tying，不能把位置嵌入跨分支共享。
-        self.location_head.weight = self.encoder.path.location_embedding.weight
-        self.time_head.weight = self.encoder.rhythm.embedding.time_embedding.weight
+        if task_routing == 'mstm_speed':
+            # 两个预测头都绑定第一支的嵌入，不与速度分支共享参数。
+            self.location_head.weight = self.encoder.path.embedding.location_embedding.weight
+            self.time_head.weight = self.encoder.path.embedding.time_embedding.weight
+            first_embeddings = (self.encoder.path.embedding.location_embedding,
+                                self.encoder.path.embedding.time_embedding)
+        else:
+            self.location_head.weight = self.encoder.path.location_embedding.weight
+            self.time_head.weight = self.encoder.rhythm.embedding.time_embedding.weight
+            first_embeddings = (self.encoder.path.location_embedding,)
 
         # 统一初始化所有嵌入，并把 padding（索引 0）对应的向量置零
         for embedding in (
-            self.encoder.path.location_embedding,
+            *first_embeddings,
             self.encoder.rhythm.embedding.location_embedding,
             self.encoder.rhythm.embedding.time_embedding,
         ):
@@ -173,6 +211,15 @@ class DualBranchPretrainModel(nn.Module):
                 embedding.weight[0].zero_()
 
     def forward(self, location_ids, time_ids, attention_mask):
+        if self.task_routing == 'mstm_speed':
+            # 掩码任务不执行速度分支，避免不必要的前向和随机数消耗。
+            hidden = self.encoder.first_hidden(location_ids, time_ids, attention_mask)
+            prediction = self.prediction_transform(hidden)
+            return {
+                'mstm_hidden_states': hidden,
+                'location_logits': self.location_head(prediction),
+                'time_logits': self.time_head(prediction),
+            }
         path, rhythm = self.encoder(location_ids, time_ids, attention_mask)
         return {
             "path_hidden_states": path,
@@ -184,7 +231,7 @@ class DualBranchPretrainModel(nn.Module):
 
     def mstm(self, batch):
         """掩码时空建模（MSTM）预训练的前向入口。"""
-        # 两个分支都只读 masked 输入，禁止从原始字段绕过遮盖。
+        # 掩码任务涉及的分支只读 masked 输入，禁止从原始字段绕过遮盖。
         # 显式调用基类 forward，避免子类重写的 forward 被误用
         return DualBranchPretrainModel.forward(
             self,
@@ -194,7 +241,7 @@ class DualBranchPretrainModel(nn.Module):
         )
 
     def encode_components(self, view):
-        """分别得到路径、节奏两个分支的掩码平均池化表示（未归一化）。"""
+        """两支有效点平均池化表示；字段含义由 branch_roles 标明。"""
         path, rhythm = self.encoder(
             view["location_ids"], view["time_ids"], view["attention_mask"]
         )
@@ -237,7 +284,7 @@ class DualBranchTrajectoryModel(DualBranchPretrainModel):
     def __init__(self, num_clusters=12, **kwargs):
         super().__init__(**kwargs)
         # 联合表示由两个分支拼接而成，维度为 2 * d_model
-        dimension = self.encoder.path.location_embedding.embedding_dim
+        dimension = self.pretrain_kwargs['d_model']
         self.clustering_layer = DECClusteringLayer(num_clusters, 2 * dimension)
 
     def forward(self, view1, view2):
@@ -261,6 +308,8 @@ class DualBranchTrajectoryModel(DualBranchPretrainModel):
         cfg = validate(checkpoint["configs"])
         if cfg["group"] != "dual_branch":
             raise ValueError("Dual-branch clustering requires dual-branch pretraining")
+        if cfg['dual_branch'].get('task_routing', 'split_masked') != self.task_routing:
+            raise ValueError('Incompatible pretraining task_routing')
         for key in ("path_weight", "distance_scale"):
             if cfg["dual_branch"][key] != getattr(self, key):
                 raise ValueError(f"Incompatible pretraining {key}")
