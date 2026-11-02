@@ -1,0 +1,75 @@
+{
+  "raw_rows": 4802933,
+  "duplicate_rows_removed": 704000,
+  "deduplicated_rows": 4098933,
+  "retained_trajectories": 6101,
+  "retained_points": 4098933,
+  "rejected_trajectories": 0,
+  "rejected_points": 0,
+  "vehicle_classes": {
+    "1": {
+      "trajectories": 45,
+      "points": 22062
+    },
+    "2": {
+      "trajectories": 5919,
+      "points": 3990400
+    },
+    "3": {
+      "trajectories": 137,
+      "points": 86471
+    }
+  },
+  "length_points": {
+    "min": 160,
+    "median": 650.0,
+    "max": 1328
+  },
+  "position_speed_mismatch_trajectories": 58,
+  "position_speed_mismatch_pairs": 86,
+  "raw_acceleration_boundary_points": 234098,
+  "smoothing_negative_clipped_points": 12634,
+  "short_for_smoothing_trajectories": 0,
+  "recordings": [
+    {
+      "recording_id": 1118846978900,
+      "unique_rows": 1180598,
+      "vehicle_tracks": 2169,
+      "start_ms": 1118846979700,
+      "end_ms": 1118847932500
+    },
+    {
+      "recording_id": 1118847842000,
+      "unique_rows": 1403095,
+      "vehicle_tracks": 2017,
+      "start_ms": 1118847843000,
+      "end_ms": 1118848842000
+    },
+    {
+      "recording_id": 1118848757000,
+      "unique_rows": 1515240,
+      "vehicle_tracks": 1915,
+      "start_ms": 1118848757500,
+      "end_ms": 1118849752200
+    }
+  ],
+  "recording_clock_overlaps": [
+    {
+      "recording_a": 1118846978900,
+      "recording_b": 1118847842000,
+      "overlap_s": 89.5
+    },
+    {
+      "recording_a": 1118847842000,
+      "recording_b": 1118848757000,
+      "overlap_s": 84.5
+    }
+  ],
+  "verification": {
+    "all_point_values_roundtrip": true,
+    "trajectory_boundaries": true,
+    "time_continuity": true,
+    "zero_origin": true,
+    "finite_nonnegative_speed": true
+  }
+}

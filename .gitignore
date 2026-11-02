@@ -21,3 +21,10 @@ artifacts/
 /runs/**/representation_history/
 /runs/**/target_history/
 /runs/**/checkpoints/
+/data/NGSIM/export.csv
+/data/NGSIM/us101.csv
+
+# 连续数据由预处理入口生成；只提交小型配置、质量报告和校验和。
+/data/NGSIM/*_processed*/*.h5
+/data/NGSIM/*_processed*/*.h5.partial
+/data/NGSIM/*_processed*/*.csv

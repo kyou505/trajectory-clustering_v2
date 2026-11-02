@@ -39,3 +39,11 @@ runs/
 旧版运行不支持用当前代码补跑，应开始新的批次。
 
 双分支使用 schema v4，从头预训练并独立运行，不与原两组共用套件。初始化及最终的表示保存在 `cluster/representations/`，默认同其他大型训练产物一样不收录到 Git。该目录出现不代表已完成有效性实验，完成状态以实际运行记录为准。
+
+## NGSIM 真实轨迹实验
+
+`ngsim/spdtc_us101_single_masked_pre30/<时间>_seed42/` 保存连续特征单分支掩码预训练。
+该入口独立于 Porto，不使用 `--suite-dir`，也不执行联合聚类训练。
+Git 沿用上述轻量记录规则，检查点、表示、划分明细和逐轨迹误差仅留本地。
+预训练后的 HDBSCAN 通过 `src.experiment.cluster_ngsim` 单独运行，结果位于 `artifacts/`。
+完整命令见 [NGSIM 实验说明](../configs/baseline/ngsim.md)。

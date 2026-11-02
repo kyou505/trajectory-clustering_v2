@@ -1,0 +1,39 @@
+{
+  "best_epoch": 21,
+  "completed_epochs": 29,
+  "validation": {
+    "masked_smooth_l1": 0.005365880097838258,
+    "trajectories": 1697,
+    "model_normalized_mse": 0.010787673723166866,
+    "model_rmse_physical_units": {
+      "relative_x_m": 0.16084278501731908,
+      "relative_y_m": 6.713429138792564,
+      "speed_m_s": 0.6788371340720936
+    },
+    "interpolation_normalized_mse": 0.004704984854080963,
+    "interpolation_rmse_physical_units": {
+      "relative_x_m": 0.07647974846813026,
+      "relative_y_m": 0.4051080070669499,
+      "speed_m_s": 0.4999482197236026
+    },
+    "quality_flag_groups": {
+      "False": {
+        "trajectories": 1690,
+        "model_normalized_mse": 0.010732986765162362
+      },
+      "True": {
+        "trajectories": 7,
+        "model_normalized_mse": 0.02399066786996887
+      }
+    }
+  },
+  "embeddings": {
+    "trajectories": 5194,
+    "dimensions": 256,
+    "l2_normalized": false,
+    "contains_training_and_validation": true,
+    "clustering_performed": false
+  },
+  "validation_used_for_model_selection": true,
+  "independent_test_evaluation": false
+}

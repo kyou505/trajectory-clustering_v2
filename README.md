@@ -90,3 +90,33 @@ python -m src.data.generation.build_fullscale \
 ```
 
 数据生成所需资料位于 `src/data/generation/resources/`。SP-DTC 使用独立 Git，现有 `con-dtc` 不参与本项目运行。
+
+## NGSIM 连续轨迹实验
+
+US-101 的真实数据单独按整条车辆观测轨迹整理，保留相对时间、相对位置和速度；无需位置词表。
+
+```bash
+python -m src.data.generation.build_ngsim
+```
+
+默认读取 `data/NGSIM/us101.csv`，输出到 `data/NGSIM/us101_processed/`，包含 H5、轨迹索引和质量报告。
+数据结构和处理规则见 [NGSIM 预处理说明](src/data/generation/NGSIM.md)。该连续数值 H5 使用独立入口，不能直接传给 Porto 的 token 训练入口。
+
+```bash
+# 本地只检查数据和前向计算，不训练。
+python -m src.experiment.run_ngsim --check-only
+
+# 在服务器上预训练，并导出完整轨迹表示；默认要求 CUDA。
+python -m src.experiment.run_ngsim --config configs/baseline/spdtc_us101_single_masked_pre30.yaml
+```
+
+预训练完成后，使用独立入口对完整轨迹表示和统计特征分别进行 HDBSCAN：
+
+```bash
+python -m src.experiment.cluster_ngsim \
+  --run runs/ngsim/spdtc_us101_single_masked_pre30/20261101T094030_429486Z_seed42
+```
+
+将 `--run` 替换为自己的预训练运行目录；默认不指定簇数，不重新训练。
+数据 H5 需单独传输，权重、表示和分析结果保留在本地，不提交 Git。
+划分、掩码任务及完整命令见 [US-101 实验说明](configs/baseline/ngsim.md)。

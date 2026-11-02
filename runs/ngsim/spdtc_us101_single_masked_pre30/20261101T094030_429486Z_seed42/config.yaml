@@ -1,0 +1,32 @@
+schema_version: 1
+name: spdtc_us101_single_masked_pre30
+seed: 42
+data:
+  path: data/NGSIM/us101_processed/trajectories.h5
+  speed_source: raw
+  vehicle_class: 2
+  train_recordings:
+  - 1118846978900
+  - 1118847842000
+  validation_recordings:
+  - 1118848757000
+  overlap_guard_seconds: 5
+  exclude_position_speed_mismatch: false
+model:
+  d_model: 256
+  num_heads: 2
+  num_layers: 2
+  dim_feedforward: 1024
+  dropout: 0.1
+mask:
+  ratio: 0.2
+  span_seconds: 2.0
+pretrain:
+  epochs: 30
+  batch_size: 8
+  learning_rate: 0.00015
+  weight_decay: 0.01
+  gradient_clip: 1.0
+  early_stopping_patience: 8
+  num_workers: 0
+output_root: runs/ngsim

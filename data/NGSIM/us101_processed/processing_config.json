@@ -1,0 +1,30 @@
+{
+  "source": "/Users/jiangqi/Desktop/trajectory-clustering/SP-DTC/data/NGSIM/us101.csv",
+  "source_bytes": 649392797,
+  "source_sha256": "2c7dafe5c70a4eb309d64973ac5c2a3ddb3b90b47fde5034c4babda2369e258d",
+  "generator_sha256": "5f4a8dbf07a2d66b53b71029fc7a0169538379d3bad1fad6cffda479cc2fb5d3",
+  "sampling_interval_ms": 100,
+  "feet_to_metre": 0.3048,
+  "sample_unit": "whole_observed_vehicle_trajectory",
+  "vehicle_class_filter": null,
+  "recording_id_rule": "Global_Time - 100 * Frame_ID (inferred, not an official recording name)",
+  "feature_names": [
+    "relative_x_m",
+    "relative_y_m",
+    "speed_m_s"
+  ],
+  "main_feature_speed": "recorded_speed_after_unit_conversion",
+  "smoothing": {
+    "separate_dataset": "speed_smoothed",
+    "method": "Savitzky-Golay",
+    "window_points": 11,
+    "polyorder": 2,
+    "clip_negative": true,
+    "short_track_rule": "copy recorded speed and flag"
+  },
+  "position_speed_mismatch_threshold_m_s": 5.0,
+  "kinematic_flags_are_exclusion_rules": false,
+  "standardization_applied": false,
+  "train_validation_split_created": false,
+  "labels_generated": false
+}
